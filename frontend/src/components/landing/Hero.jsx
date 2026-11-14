@@ -32,7 +32,7 @@ export default function Hero({ children }) {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <GlassBadge appearance="glass" tone="positive" dot pulse size="lg" className="text-white">
+          <GlassBadge appearance="glass" tone="#6ee7b7" dot pulse size="lg">
             Community safety platform for colleges
           </GlassBadge>
           <h1 className="mt-6 text-4xl leading-[1.08] font-extrabold tracking-tight text-balance sm:text-6xl">
