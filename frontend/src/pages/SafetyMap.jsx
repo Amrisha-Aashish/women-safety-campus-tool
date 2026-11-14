@@ -50,7 +50,7 @@ export default function SafetyMap() {
 
       <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card radius={24} padding="none" className="relative overflow-hidden">
-          <div className="relative h-[520px] w-full bg-[#111111] sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
+          <div className="relative h-[520px] w-full bg-neutral-900 sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
             <CampusMap
               reports={visible}
               spots={spots}
@@ -69,7 +69,7 @@ export default function SafetyMap() {
             <div className="pointer-events-auto">
               <GlassSegmented options={LAYERS} value={layer} onChange={setLayer} aria-label="Map layers" />
             </div>
-            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-neutral-200 ring-1 ring-white/10">
+            <p className="pointer-events-auto rounded-full bg-neutral-900/85 px-3 py-1.5 text-xs font-semibold text-neutral-200 ring-1 ring-neutral-50/10">
               {CAMPUS_NAME}
             </p>
           </div>

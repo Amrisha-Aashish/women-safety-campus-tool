@@ -2,12 +2,13 @@ import { GlassButton } from 'glassform';
 import { Link, useLocation } from 'react-router';
 import { navItemFor } from '../../data/navigation.js';
 import Icon from '../Icon.jsx';
+import ThemeToggle from '../ThemeToggle.jsx';
 import MobileNav from './MobileNav.jsx';
 
 /**
  * The row at the top of each internal page: the menu button (phones only),
- * the page title and description, then page controls, page actions and the
- * SOS button on the right.
+ * the page title and description, then page controls, page actions, the
+ * light/dark toggle and the SOS button on the right.
  *
  * @param {{ children?: import('react').ReactNode, actions?: import('react').ReactNode }} props
  */
@@ -27,6 +28,7 @@ export default function PageToolbar({ children, actions }) {
         {children}
         <div className="ml-auto flex items-center gap-2">
           {actions}
+          <ThemeToggle />
           {!onSos && (
             <GlassButton as={Link} to="/sos" size="sm" tint="rgb(220 38 38 / 0.88)" className="text-white">
               <Icon name="siren" />

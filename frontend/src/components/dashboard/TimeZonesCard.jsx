@@ -43,7 +43,7 @@ export default function TimeZonesCard({ hours, bands }) {
         {bands.map((band) => (
           <li
             key={band.id}
-            className={`rounded-xl px-3 py-2.5 ring-1 ${band.red ? 'bg-red-500/10 ring-red-500/30' : 'bg-white/5 ring-white/10'}`}
+            className={`rounded-xl px-3 py-2.5 ring-1 ${band.red ? 'bg-red-500/10 ring-red-500/30' : 'bg-neutral-50/5 ring-neutral-50/10'}`}
           >
             <div className="flex items-center justify-between gap-1">
               <span className="text-xs font-semibold text-neutral-200">{band.label}</span>

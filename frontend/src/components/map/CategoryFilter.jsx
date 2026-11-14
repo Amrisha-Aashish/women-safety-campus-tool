@@ -23,7 +23,7 @@ export default function CategoryFilter({ selected, onChange, counts }) {
           indeterminate={!all && selected.size > 0}
           onChange={(on) => onChange(new Set(on ? CATEGORIES.map((c) => c.value) : []))}
         />
-        <hr className="border-white/10" />
+        <hr className="border-neutral-50/10" />
         {CATEGORIES.map((c) => (
           <div key={c.value} className="flex items-center justify-between gap-2">
             <Checkbox

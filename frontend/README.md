@@ -5,6 +5,7 @@ React + Vite frontend for the Community Based Reporting and Monitoring Tool for 
 - **UI components:** [glassform](https://www.npmjs.com/package/glassform). Glass is used for navigation and controls (sidebar, top bar, buttons, segmented controls, map overlays, SOS). The solid twins (`Card`, `Table`, `StatCard`, `List`…) are used for content.
 - **Layout:** Tailwind CSS v4.
 - **Icons:** a small in-house SVG set (`src/components/Icon.jsx` + `src/data/iconPaths.js`).
+- **Themes:** dark by default, with a light/dark toggle in every page toolbar and the landing header. The choice is saved in `localStorage` and applied before the first paint (`index.html`, `src/lib/theme.js`). The light theme flips the colour scales in `src/index.css`; elements marked `.dark` (hero, sidebar, privacy band, SOS panel) stay dark in both.
 - **Map:** OpenStreetMap street tiles cut to the campus boundary, with labels, risk zones and report dots drawn on top as SVG (`src/components/map/CampusMap.jsx`). No map library: tiles are placed with the Web Mercator maths in `src/lib/campusGeo.js`.
 
 ## Run locally

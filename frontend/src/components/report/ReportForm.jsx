@@ -41,10 +41,10 @@ export default function ReportForm({ form }) {
           />
         </fieldset>
 
-        <hr className="border-white/10" />
+        <hr className="border-neutral-50/10" />
         <LocationFields values={values} set={set} errors={errors} />
 
-        <hr className="border-white/10" />
+        <hr className="border-neutral-50/10" />
         <AnonymousToggle checked={values.isAnonymous} onChange={(isAnonymous) => set({ isAnonymous })} />
 
         {form.serverError && (

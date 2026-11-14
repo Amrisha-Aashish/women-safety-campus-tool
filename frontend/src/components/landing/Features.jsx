@@ -6,7 +6,7 @@ import SectionHeading from './SectionHeading.jsx';
 /** Grid of the platform's main features. */
 export default function Features() {
   return (
-    <section id="features" className="scroll-mt-24 border-y border-white/5 bg-ink-900 py-20 sm:py-28">
+    <section id="features" className="scroll-mt-24 border-y border-neutral-50/5 bg-neutral-900/40 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading eyebrow="Features" title="Everything a campus needs to stay ahead">
           Built for students who need to speak up safely, and for the people responsible for acting on it.

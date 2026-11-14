@@ -8,6 +8,8 @@ import { formatDateTime } from '../../lib/format.js';
 /** Risk zone radius in metres: grows with the number of reports at a place. */
 const zoneRadiusM = (count) => Math.min(70, 18 + count * 5);
 const SCALE_M = 100;
+/** The page's foreground colour at `pct`% (white-ish on dark, black-ish on light). */
+const INK = (pct) => `color-mix(in srgb, var(--color-neutral-50) ${pct}%, transparent)`;
 
 /**
  * Campus map: OpenStreetMap street tiles cut to the campus outline,
@@ -56,7 +58,7 @@ export default function CampusMap({
     >
       <defs>
         <pattern id={`${id}-dots`} width="26" height="26" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.6" fill="rgb(255 255 255 / 0.08)" />
+          <circle cx="2" cy="2" r="1.6" style={{ fill: INK(8) }} />
         </pattern>
         <clipPath id={`${id}-clip`}>
           <path d={BOUNDARY_PATH} />
@@ -64,7 +66,7 @@ export default function CampusMap({
       </defs>
 
       {/* Campus ground: a dot grid while tiles load (or if they can't), then the map tiles, slightly dimmed so dots stand out */}
-      <path d={BOUNDARY_PATH} fill="rgb(255 255 255 / 0.025)" />
+      <path d={BOUNDARY_PATH} style={{ fill: INK(2.5) }} />
       <rect x={x} y={y} width={width} height={height} fill={`url(#${id}-dots)`} clipPath={`url(#${id}-clip)`} />
       <g clipPath={`url(#${id}-clip)`} aria-hidden="true">
         {CAMPUS_TILES.map((t) => (
@@ -81,7 +83,7 @@ export default function CampusMap({
         ))}
         <rect x={x} y={y} width={width} height={height} fill="#0a0a0a" opacity="0.12" />
       </g>
-      <path d={BOUNDARY_PATH} fill="none" stroke="rgb(255 255 255 / 0.7)" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d={BOUNDARY_PATH} fill="none" strokeWidth="2.5" strokeLinejoin="round" style={{ stroke: INK(70) }} />
 
       {/* Risk zones, clipped to the campus so nothing is drawn outside it */}
       <g clipPath={`url(#${id}-clip)`}>
@@ -104,15 +106,14 @@ export default function CampusMap({
                 onKeyDown={activate(() => onSelectSpot?.(spot.name))}
               >
                 {selected && (
-                  <circle cx={p.x} cy={p.y} r={r} fill={color} opacity="0.35" className="animate-sos-ring" style={{ transformBox: 'fill-box', transformOrigin: 'center' }} />
+                  <circle cx={p.x} cy={p.y} r={r} opacity="0.35" className="animate-sos-ring" style={{ fill: color, transformBox: 'fill-box', transformOrigin: 'center' }} />
                 )}
                 <circle
                   cx={p.x}
                   cy={p.y}
                   r={r}
-                  fill={color}
                   fillOpacity={spot.risk === 'high' ? 0.26 : 0.18}
-                  stroke={color}
+                  style={{ fill: color, stroke: color }}
                   strokeOpacity={selected ? 1 : 0.8}
                   strokeWidth={selected ? 3.5 : 2}
                   strokeDasharray={spot.risk === 'low' ? '6 8' : undefined}
@@ -163,7 +164,7 @@ export default function CampusMap({
               cx={p.x}
               cy={p.y}
               r={selected ? 13 : 9}
-              fill={category.color}
+              style={{ fill: category.color }}
               stroke={selected ? '#fff' : '#0a0a0a'}
               strokeWidth={selected ? 4 : 3}
               role="button"
@@ -179,13 +180,13 @@ export default function CampusMap({
           );
         })}
 
-      <text x={x + 8} y={height + y - 10} fontSize="15" fill="#a3a3a3">
+      <text x={x + 8} y={height + y - 10} fontSize="15" style={{ fill: 'var(--color-neutral-400)' }}>
         {STREET_TILES.attribution}
       </text>
 
       {/* North arrow and scale */}
-      <g aria-hidden="true" fill="#d4d4d4" fontSize="20" fontWeight="600">
-        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} fill="#d4d4d4" />
+      <g aria-hidden="true" fontSize="20" fontWeight="600" style={{ fill: 'var(--color-neutral-300)' }}>
+        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} />
         <text x={width + x - 26} y={y + 66} textAnchor="middle">
           N
         </text>
@@ -194,7 +195,7 @@ export default function CampusMap({
           x2={width + x - 30}
           y1={height + y - 26}
           y2={height + y - 26}
-          stroke="#d4d4d4"
+          style={{ stroke: 'var(--color-neutral-300)' }}
           strokeWidth="2"
         />
         <text x={width + x - 30 - (SCALE_M * UNITS_PER_M) / 2} y={height + y - 34} textAnchor="middle">
