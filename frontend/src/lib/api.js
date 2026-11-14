@@ -81,3 +81,11 @@ export const acknowledgeSosAlert = (id) =>
 /** PATCH /api/sos-alerts/:id/resolve → the updated alert, with resolvedAt. */
 export const resolveSosAlert = (id) =>
   request(`/api/sos-alerts/${encodeURIComponent(id)}/resolve`, { method: 'PATCH' });
+
+/** GET /api/analytics/risk-zones → risk zone[] */
+export const getRiskZones = (signal) =>
+  request('/api/analytics/risk-zones', { signal });
+
+/** GET /api/analytics/red-time-zones → red time zone[] */
+export const getRedTimeZones = (signal) =>
+  request('/api/analytics/red-time-zones', { signal });
