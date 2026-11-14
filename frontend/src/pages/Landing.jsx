@@ -1,4 +1,6 @@
+import Features from '../components/landing/Features.jsx';
 import Hero from '../components/landing/Hero.jsx';
+import HowItWorks from '../components/landing/HowItWorks.jsx';
 import QuickActions from '../components/landing/QuickActions.jsx';
 import SiteHeader from '../components/landing/SiteHeader.jsx';
 
@@ -11,6 +13,8 @@ export default function Landing() {
         <Hero>
           <QuickActions />
         </Hero>
+        <HowItWorks />
+        <Features />
       </main>
     </div>
   );
