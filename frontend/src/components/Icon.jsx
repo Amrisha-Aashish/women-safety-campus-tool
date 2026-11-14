@@ -4,10 +4,10 @@ import { ICON_PATHS } from '../data/iconPaths.js';
  * Line icon from the in-house set in data/iconPaths.js. Sized by font size
  * (1em) unless `size` or a size class is given; colour follows the text.
  *
- * @param {{ name: keyof ICON_PATHS, size?: number|string, strokeWidth?: number, className?: string, label?: string }} props
+ * @param {{ name: keyof ICON_PATHS, size?: number|string, strokeWidth?: number, className?: string, style?: object, label?: string }} props
  *   `label` makes the icon meaningful to screen readers; without it the icon is decorative.
  */
-export default function Icon({ name, size = '1em', strokeWidth = 2, className, label }) {
+export default function Icon({ name, size = '1em', strokeWidth = 2, className, style, label }) {
   const shapes = ICON_PATHS[name];
   if (!shapes) return null;
   return (
@@ -21,6 +21,7 @@ export default function Icon({ name, size = '1em', strokeWidth = 2, className, l
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
       role={label ? 'img' : undefined}
       aria-label={label}
       aria-hidden={label ? undefined : 'true'}
