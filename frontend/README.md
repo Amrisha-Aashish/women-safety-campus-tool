@@ -5,7 +5,7 @@ React + Vite frontend for the Community Based Reporting and Monitoring Tool for 
 - **UI components:** [glassform](https://www.npmjs.com/package/glassform). Glass is used for navigation and controls (sidebar, top bar, buttons, segmented controls, map overlays, SOS). The solid twins (`Card`, `Table`, `StatCard`, `List`…) are used for content.
 - **Layout:** Tailwind CSS v4.
 - **Icons:** a small in-house SVG set (`src/components/Icon.jsx` + `src/data/iconPaths.js`).
-- **Map:** Leaflet with OpenStreetMap tiles. Leaflet only draws the map; every control on and around it is glassform.
+- **Map:** a minimal SVG drawing of the campus only (`src/components/map/CampusMap.jsx`), built from the campus boundary. No map library or tiles.
 
 ## Run locally
 
@@ -35,8 +35,8 @@ npm run preview    # serve the build
 | --- | --- | --- |
 | `/` | Landing page: project pitch and quick actions for Report, Safety map and SOS | none |
 | `/dashboard` | Admin dashboard: total / open / resolved / anonymous, reports by category, red time zones by hour, top black spots, searchable recent reports table | `GET /api/reports` every 10 s |
-| `/report` | Report form: category dropdown, description, campus place picker, location name, latitude / longitude, browser location, anonymous toggle, success and error states | `POST /api/reports` |
-| `/map` | Safety map: report markers by category, risk zones by level, layer and category filters, black spot list | `GET /api/reports` |
+| `/report` | Report form: category dropdown, description, campus place picker, location name, latitude / longitude (must be on campus), browser location, anonymous toggle, success and error states | `POST /api/reports` |
+| `/map` | Safety map of the campus only: report dots by category (click for details), risk zones by level, layer and category filters, black spot list | `GET /api/reports` |
 | `/sos` | SOS: large button, confirmation dialog, location capture, sent screen, emergency numbers | not connected yet (see below) |
 | `*` | 404 page | none |
 
@@ -47,7 +47,7 @@ The internal pages share a sidebar layout (`src/components/layout/AppLayout.jsx`
 - **Live / Sample switch** (dashboard and map). *Live* reads `/api/reports`. When the API can't be reached, or *Sample* is picked, 46 seeded sample reports (`src/data/sampleReports.js`) are shown so demos stay meaningful while the backend uses its in-memory store.
 - **Black spots and red time zones** are computed in the browser (`src/lib/reportStats.js`). Replace `hotspots()` and `redTimeZones()` with results from the analytics service when it is ready.
 - **Form validation** (`src/hooks/useReportForm.js`) mirrors `backend/src/middleware/validate-report.middleware.js`. Keep the two in sync.
-- **Campus places** (`src/data/campusPlaces.js`) are example coordinates around the point in the backend README. Swap in the real campus.
+- **Campus boundary and places** (`src/data/campusPlaces.js`) are example coordinates around the point in the backend README. Swap in the real campus outline and places. Reports must fall inside `CAMPUS_BOUNDARY`: the form checks it, and the backend enforces the same polygon in `backend/src/config/campus.js`, so keep the two identical. The map is drawn from the same boundary.
 - **SOS** has no backend endpoint yet. `src/lib/sos.js` simulates sending, and the sent screen says it is in demo mode. When `POST /api/sos` exists, replace the body of `sendSos()` and set `SOS_CONNECTED = true`.
 - **Campus security number** in `src/data/emergencyContacts.js` is still a placeholder.
 - **Report status** only shows what the API returns. Marking a report as resolved needs an API endpoint first.
@@ -57,7 +57,7 @@ The internal pages share a sidebar layout (`src/components/layout/AppLayout.jsx`
 ```
 src/
   main.jsx, App.jsx        entry and routes (app pages are lazy-loaded)
-  index.css                Tailwind entry, design tokens, glassform theme, Leaflet styles
+  index.css                Tailwind entry, design tokens, dark glassform theme
   pages/                   one file per route
   components/
     landing/               landing page sections
@@ -65,10 +65,10 @@ src/
     app/                   shared app pieces (Live/Sample data bar)
     dashboard/             stat cards, category, time zones, black spots, reports table
     report/                report form parts and result
-    map/                   Leaflet map, legend, filters, black spot list
+    map/                   SVG campus map, report detail, legend, filters, black spot list
     sos/                   SOS button, dialog, location, result, contacts, tips
     Icon.jsx, Logo.jsx
   hooks/                   useReports, useReportForm, useGeolocation, useApiHealth
-  lib/                     api client, report analytics, formatting, SOS
+  lib/                     api client, campus geometry, report analytics, formatting, SOS
   data/                    categories, campus places, sample reports, navigation, copy
 ```
