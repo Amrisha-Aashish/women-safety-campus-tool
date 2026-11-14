@@ -11,6 +11,11 @@ import { useReports } from '../hooks/useReports.js';
 import { isOnCampus } from '../lib/campusGeo.js';
 import { hotspots } from '../lib/reportStats.js';
 
+const BASEMAP_OPTIONS = [
+  { value: 'satellite', label: 'Satellite' },
+  { value: 'streets', label: 'Streets' },
+];
+
 const LAYERS = [
   { value: 'all', label: 'All' },
   { value: 'reports', label: 'Reports' },
@@ -18,13 +23,14 @@ const LAYERS = [
 ];
 
 /**
- * Safety map: reported incidents and risk zones ("black spots") on the campus.
- * Only the campus is shown, so reports outside its boundary are left out.
+ * Safety map: reported incidents and risk zones ("black spots") on a satellite or
+ * street map of the campus. Only the campus is shown, so reports outside its boundary are left out.
  * Risk zones are computed in the browser for now; the analytics service will supply them later.
  */
 export default function SafetyMap() {
   const [source, setSource] = useState('live');
   const [layer, setLayer] = useState('all');
+  const [basemap, setBasemap] = useState('satellite');
   const [categories, setCategories] = useState(() => new Set(CATEGORIES.map((c) => c.value)));
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
@@ -49,7 +55,7 @@ export default function SafetyMap() {
 
       <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card radius={24} padding="none" className="relative overflow-hidden">
-          <div className="relative h-[440px] w-full bg-[#0e1120] sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
+          <div className="relative h-[520px] w-full bg-[#0e1120] sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
             <CampusMap
               reports={visible}
               spots={spots}
@@ -59,7 +65,8 @@ export default function SafetyMap() {
               onSelectSpot={selectSpot}
               selectedReport={selectedReport}
               onSelectReport={selectReport}
-              className="absolute inset-0 size-full p-2 pt-16 sm:p-3 sm:pt-16"
+              basemap={basemap}
+              className="absolute inset-0 size-full p-2 pt-[7.25rem] sm:p-3 sm:pt-16"
             />
           </div>
 
@@ -68,16 +75,16 @@ export default function SafetyMap() {
             <div className="pointer-events-auto">
               <GlassSegmented options={LAYERS} value={layer} onChange={setLayer} aria-label="Map layers" />
             </div>
-            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-white/10">
-              {visible.length} reports · {spots.length} places
-            </p>
+            <div className="pointer-events-auto">
+              <GlassSegmented options={BASEMAP_OPTIONS} value={basemap} onChange={setBasemap} aria-label="Map style" />
+            </div>
           </div>
           {report && (
             <div className="pointer-events-none absolute inset-x-3 bottom-14 flex justify-end sm:bottom-16">
               <ReportDetail report={report} onClose={() => setSelectedReport(null)} />
             </div>
           )}
-          <MapLegend />
+          <MapLegend reports={visible.length} places={spots.length} />
         </Card>
 
         <div className="flex flex-col gap-5">
