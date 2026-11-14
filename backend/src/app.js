@@ -7,6 +7,7 @@ import reportsRouter from './routes/reports.routes.js';
 import sosAlertsRouter from './routes/sos-alerts.routes.js';
 import dashboardRouter from './routes/dashboard.routes.js';
 import { notFound, errorHandler } from './middleware/error.middleware.js';
+import analyticsRouter from './routes/analytics.routes.js';
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/health', healthRouter);
 app.use('/api/reports', reportsRouter);
 app.use('/api/sos-alerts', sosAlertsRouter);
 app.use('/api/dashboard', dashboardRouter);
+app.use('/api/analytics', analyticsRouter);
 
 app.use(notFound);
 app.use(errorHandler);
