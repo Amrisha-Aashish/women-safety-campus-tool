@@ -19,7 +19,7 @@ export default function SpotList({ spots, selected, onSelect }) {
   }));
 
   return (
-    <Card radius={22} title="Black spots" subtitle="Tap one to find it on the map" padding="sm" className="p-5">
+    <Card radius={22} title="Black spots" subtitle="Tap one to highlight it on the map" padding="sm" className="p-5">
       <List
         surface={false}
         items={items}
