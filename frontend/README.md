@@ -5,7 +5,7 @@ React + Vite frontend for the Community Based Reporting and Monitoring Tool for 
 - **UI components:** [glassform](https://www.npmjs.com/package/glassform). Glass is used for navigation and controls (sidebar, top bar, buttons, segmented controls, map overlays, SOS). The solid twins (`Card`, `Table`, `StatCard`, `List`…) are used for content.
 - **Layout:** Tailwind CSS v4.
 - **Icons:** a small in-house SVG set (`src/components/Icon.jsx` + `src/data/iconPaths.js`).
-- **Map:** real map tiles (Esri satellite imagery or OpenStreetMap streets) cut to the campus boundary, with labels, risk zones and report dots drawn on top as SVG (`src/components/map/CampusMap.jsx`). No map library: tiles are placed with the Web Mercator maths in `src/lib/campusGeo.js`.
+- **Map:** OpenStreetMap street tiles cut to the campus boundary, with labels, risk zones and report dots drawn on top as SVG (`src/components/map/CampusMap.jsx`). No map library: tiles are placed with the Web Mercator maths in `src/lib/campusGeo.js`.
 
 ## Run locally
 
@@ -36,7 +36,7 @@ npm run preview    # serve the build
 | `/` | Landing page: project pitch and quick actions for Report, Safety map and SOS | none |
 | `/dashboard` | Admin dashboard: total / open / resolved / anonymous, reports by category, red time zones by hour, top black spots, searchable recent reports table | `GET /api/reports` every 10 s |
 | `/report` | Report form: category dropdown, description, campus place picker, location name, latitude / longitude (must be on campus), browser location, anonymous toggle, success and error states | `POST /api/reports` |
-| `/map` | Safety map of the campus only, satellite or streets: report dots by category (click for details), risk zones by level, layer and category filters, black spot list | `GET /api/reports` + map tiles |
+| `/map` | Street map of the campus only: report dots by category (click for details), risk zones by level, layer and category filters, black spot list | `GET /api/reports` + map tiles |
 | `/sos` | SOS: large button, confirmation dialog, location capture, sent screen, emergency numbers | not connected yet (see below) |
 | `*` | 404 page | none |
 
@@ -44,14 +44,14 @@ The internal pages share a sidebar layout (`src/components/layout/AppLayout.jsx`
 
 ## Map tiles
 
-The map loads 49 tiles at zoom 18 that cover the campus, from Esri World Imagery (satellite) or OpenStreetMap (streets). Both are free with the attribution shown on the map; for heavy public traffic, check their usage policies or switch to a provider with an API key by changing `BASEMAPS` in `src/lib/campusGeo.js`.
+The map loads the 25 OpenStreetMap tiles (zoom 18) that cover the campus. They are free with the attribution shown on the map; for heavy public traffic, check the [tile usage policy](https://operations.osmfoundation.org/policies/tiles/) or switch to a provider with an API key by changing `STREET_TILES` in `src/lib/campusGeo.js`.
 
 ## Data and placeholders
 
 - **Live / Sample switch** (dashboard and map). *Live* reads `/api/reports`. When the API can't be reached, or *Sample* is picked, 46 seeded sample reports (`src/data/sampleReports.js`) are shown so demos stay meaningful while the backend uses its in-memory store.
 - **Black spots and red time zones** are computed in the browser (`src/lib/reportStats.js`). Replace `hotspots()` and `redTimeZones()` with results from the analytics service when it is ready.
 - **Form validation** (`src/hooks/useReportForm.js`) mirrors `backend/src/middleware/validate-report.middleware.js`. Keep the two in sync.
-- **Campus boundary and places** (`src/data/campusPlaces.js`) are example coordinates around the point in the backend README. Swap in the real campus outline and places. Reports must fall inside `CAMPUS_BOUNDARY`: the form checks it, and the backend enforces the same polygon in `backend/src/config/campus.js`, so keep the two identical. The map is drawn from the same boundary.
+- **Campus:** Ajeenkya DY Patil University, Lohegaon, Pune. The boundary in `src/data/campusPlaces.js` is the university outline from OpenStreetMap (way 1410120541), and the places are real OpenStreetMap features; the ones marked “unnamed in OSM” got descriptive names, so rename them to what students call them. Reports must fall inside `CAMPUS_BOUNDARY`: the form checks it, and the backend enforces the same polygon in `backend/src/config/campus.js`, so keep the two identical. The map is drawn from the same boundary.
 - **SOS** has no backend endpoint yet. `src/lib/sos.js` simulates sending, and the sent screen says it is in demo mode. When `POST /api/sos` exists, replace the body of `sendSos()` and set `SOS_CONNECTED = true`.
 - **Campus security number** in `src/data/emergencyContacts.js` is still a placeholder.
 - **Report status** only shows what the API returns. Marking a report as resolved needs an API endpoint first.

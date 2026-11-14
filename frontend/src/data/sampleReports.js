@@ -6,14 +6,14 @@ import { CAMPUS_PLACES } from './campusPlaces.js';
 // Places that get more reports, and the hours they cluster around: the
 // patterns the analytics service should find in real data.
 const HOTSPOTS = [
-  { placeId: 'back-road', weight: 9, hours: [20, 21, 22, 23], categories: ['STALKING', 'UNSAFE_AREA', 'HARASSMENT'] },
-  { placeId: 'east-gate', weight: 7, hours: [19, 20, 21], categories: ['UNSAFE_AREA', 'HARASSMENT'] },
-  { placeId: 'parking', weight: 6, hours: [18, 19, 22], categories: ['HARASSMENT', 'STALKING', 'UNSAFE_AREA'] },
-  { placeId: 'sports', weight: 3, hours: [17, 18, 19], categories: ['HARASSMENT', 'OTHER'] },
-  { placeId: 'canteen', weight: 2, hours: [13, 14], categories: ['HARASSMENT', 'OTHER'] },
-  { placeId: 'library', weight: 2, hours: [10, 16], categories: ['OTHER', 'STALKING'] },
-  { placeId: 'main-gate', weight: 2, hours: [8, 23], categories: ['EMERGENCY', 'OTHER'] },
-  { placeId: 'girls-hostel', weight: 3, hours: [21, 22, 0], categories: ['STALKING', 'EMERGENCY'] },
+  { placeId: 'north-road', weight: 9, hours: [20, 21, 22, 23], categories: ['STALKING', 'UNSAFE_AREA', 'HARASSMENT'] },
+  { placeId: 'west-road', weight: 7, hours: [19, 20, 21], categories: ['UNSAFE_AREA', 'HARASSMENT'] },
+  { placeId: 'main-gate', weight: 6, hours: [18, 19, 22], categories: ['HARASSMENT', 'STALKING', 'UNSAFE_AREA'] },
+  { placeId: 'sports-ground', weight: 3, hours: [17, 18, 19], categories: ['HARASSMENT', 'OTHER'] },
+  { placeId: 'engineering', weight: 2, hours: [13, 14], categories: ['HARASSMENT', 'OTHER'] },
+  { placeId: 'north-block', weight: 2, hours: [10, 16], categories: ['OTHER', 'STALKING'] },
+  { placeId: 'college-road', weight: 2, hours: [8, 23], categories: ['EMERGENCY', 'OTHER'] },
+  { placeId: 'north-west-block', weight: 3, hours: [21, 22, 0], categories: ['STALKING', 'EMERGENCY'] },
 ];
 
 const DESCRIPTIONS = {
@@ -60,8 +60,8 @@ function build(count = 46) {
       description: pick(DESCRIPTIONS[category]),
       location: {
         name: place.name,
-        latitude: Number((place.latitude + (rand() - 0.5) * 0.0006).toFixed(6)),
-        longitude: Number((place.longitude + (rand() - 0.5) * 0.0006).toFixed(6)),
+        latitude: Number((place.latitude + (rand() - 0.5) * 0.0003).toFixed(6)),
+        longitude: Number((place.longitude + (rand() - 0.5) * 0.0003).toFixed(6)),
       },
       occurredAt: when.toISOString(),
       isAnonymous: anonymous,
