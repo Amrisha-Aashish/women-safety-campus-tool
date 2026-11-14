@@ -1,3 +1,5 @@
+import { isInsideCampus } from '../config/campus.js';
+
 const validCategories = new Set(['HARASSMENT', 'STALKING', 'UNSAFE_AREA', 'EMERGENCY', 'OTHER']);
 
 export function validateCreateReport(request, response, next) {
@@ -21,6 +23,13 @@ export function validateCreateReport(request, response, next) {
     return response.status(400).json({
       success: false,
       message: 'location must include name, latitude, and longitude.'
+    });
+  }
+
+  if (!isInsideCampus(location.latitude, location.longitude)) {
+    return response.status(400).json({
+      success: false,
+      message: 'location must be inside the campus boundary.'
     });
   }
 
