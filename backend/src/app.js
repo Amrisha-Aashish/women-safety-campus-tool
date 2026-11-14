@@ -5,8 +5,9 @@ import morgan from 'morgan';
 import healthRouter from './routes/health.routes.js';
 import reportsRouter from './routes/reports.routes.js';
 import sosAlertsRouter from './routes/sos-alerts.routes.js';
-import { notFound, errorHandler } from './middleware/error.middleware.js';
 import dashboardRouter from './routes/dashboard.routes.js';
+import { notFound, errorHandler } from './middleware/error.middleware.js';
+
 
 const app = express();
 
