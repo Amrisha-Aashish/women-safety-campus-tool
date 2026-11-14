@@ -1,7 +1,7 @@
 import { Badge, Button, Card } from 'glassform';
+import { Info, Map as MapIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { RISK } from '../../data/risk.js';
-import Icon from '../Icon.jsx';
 
 /**
  * Unsafe areas ranked by risk score. For now it shows placeholder zones;
@@ -21,7 +21,7 @@ export default function RiskZonesCard({ zones, placeholder = true }) {
       badge={placeholder && <Badge tone="neutral">Placeholder</Badge>}
       actions={
         <Button as={Link} to="/map" size="sm" aria-label="Open safety map" title="Open safety map" className="w-9 px-0">
-          <Icon name="map" />
+          <MapIcon />
         </Button>
       }
     >
@@ -49,7 +49,7 @@ export default function RiskZonesCard({ zones, placeholder = true }) {
       </ul>
       {placeholder && (
         <p className="mt-5 flex items-start gap-2 border-t border-neutral-500/15 pt-4 text-xs text-neutral-400">
-          <Icon name="info" size={14} className="mt-0.5 shrink-0" />
+          <Info size={14} className="mt-0.5 shrink-0" />
           Sample zones. Real scores appear here once the risk zone API is ready.
         </p>
       )}

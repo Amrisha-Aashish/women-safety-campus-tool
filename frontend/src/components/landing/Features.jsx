@@ -1,6 +1,5 @@
 import { Badge, Card } from 'glassform';
 import { FEATURES } from '../../data/landingContent.js';
-import Icon from '../Icon.jsx';
 import SectionHeading from './SectionHeading.jsx';
 
 /** Grid of the platform's main features. */
@@ -13,7 +12,7 @@ export default function Features() {
         </SectionHeading>
 
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map(({ icon, title, text, soon }) => (
+          {FEATURES.map(({ icon: FeatureIcon, title, text, soon }) => (
             <li key={title} className="flex">
               <Card
                 radius={22}
@@ -21,7 +20,7 @@ export default function Features() {
                 className="w-full p-5"
                 leading={
                   <span className="grid size-10 place-items-center rounded-xl bg-brand-500/15 text-brand-300">
-                    <Icon name={icon} size={20} />
+                    <FeatureIcon size={20} />
                   </span>
                 }
                 badge={soon && <Badge tone="warning">Coming soon</Badge>}

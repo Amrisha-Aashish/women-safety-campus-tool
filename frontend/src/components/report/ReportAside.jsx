@@ -1,6 +1,6 @@
 import { Card, GlassButton, Timeline } from 'glassform';
+import { Lock, Siren } from 'lucide-react';
 import { Link } from 'react-router';
-import Icon from '../Icon.jsx';
 
 const NEXT = [
   { title: 'Your report is saved', description: 'It appears on the live dashboard within seconds.', tone: 'accent' },
@@ -17,7 +17,7 @@ export default function ReportAside() {
         title="Your privacy"
         leading={
           <span className="grid size-9 place-items-center rounded-xl bg-brand-500/15 text-brand-300">
-            <Icon name="lock" size={18} />
+            <Lock size={18} />
           </span>
         }
       >
@@ -36,7 +36,7 @@ export default function ReportAside() {
         <p className="font-display text-lg font-bold">In danger right now?</p>
         <p className="mt-1 text-sm text-red-100">Don’t fill in a form. Send an SOS with your location instead.</p>
         <GlassButton as={Link} to="/sos" className="mt-4 text-white">
-          <Icon name="siren" />
+          <Siren />
           Open SOS
         </GlassButton>
       </div>

@@ -1,10 +1,10 @@
 import { Badge, Button, Card, List, Progress } from 'glassform';
+import { Bell, ChevronRight, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router';
 import { getSosStatus, SOS_STATUSES } from '../../data/sosStatus.js';
 import { nearestPlace } from '../../lib/campusGeo.js';
 import { timeAgo } from '../../lib/format.js';
 import { byUrgency } from '../../lib/sosStats.js';
-import Icon from '../Icon.jsx';
 
 const DOT = { ACTIVE: 'bg-(--lg-negative)', ACKNOWLEDGED: 'bg-(--lg-warning)', RESOLVED: 'bg-(--lg-positive)' };
 
@@ -28,7 +28,7 @@ export default function SosStatusCard({ alerts, summary, limit = 4 }) {
         <span
           className={`grid size-9 place-items-center rounded-xl ${active ? 'bg-red-500/15 text-red-300' : 'bg-amber-500/15 text-amber-300'}`}
         >
-          <Icon name={status.icon} size={18} />
+          <status.icon size={18} />
         </span>
       ),
       title: near ? `Near ${near.place.name}` : 'Location unknown',
@@ -58,7 +58,7 @@ export default function SosStatusCard({ alerts, summary, limit = 4 }) {
       }
       actions={
         <Button as={Link} to="/sos-alerts" size="sm">
-          <Icon name="bell" />
+          <Bell />
           Respond
         </Button>
       }
@@ -96,7 +96,7 @@ export default function SosStatusCard({ alerts, summary, limit = 4 }) {
           className="-mx-2"
           empty={
             <p className="flex items-center justify-center gap-2 py-6 text-sm text-emerald-300">
-              <Icon name="shield-check" size={16} />
+              <ShieldCheck size={16} />
               No open alerts. Everyone who pressed SOS has been helped.
             </p>
           }
@@ -104,7 +104,7 @@ export default function SosStatusCard({ alerts, summary, limit = 4 }) {
         {open.length > limit && (
           <Link to="/sos-alerts" className="mt-2 inline-flex items-center gap-1 text-sm text-brand-300 no-underline hover:underline">
             {open.length - limit} more open
-            <Icon name="chevron-right" size={14} />
+            <ChevronRight size={14} />
           </Link>
         )}
       </div>

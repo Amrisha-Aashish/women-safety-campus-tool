@@ -1,6 +1,6 @@
 import { GlassButton, GlassNavbar } from 'glassform';
+import { ArrowRight, Siren } from 'lucide-react';
 import { Link } from 'react-router';
-import Icon from '../Icon.jsx';
 import Logo from '../Logo.jsx';
 import ThemeToggle from '../ThemeToggle.jsx';
 
@@ -24,12 +24,12 @@ export default function SiteHeader() {
           <>
             <ThemeToggle />
             <GlassButton as={Link} to="/sos" size="sm" tint="rgb(220 38 38 / 0.85)" className="text-white">
-              <Icon name="siren" />
+              <Siren />
               SOS
             </GlassButton>
             <GlassButton as={Link} to="/dashboard" size="sm" className="hidden sm:inline-flex">
               Open app
-              <Icon name="arrow-right" />
+              <ArrowRight />
             </GlassButton>
           </>
         }

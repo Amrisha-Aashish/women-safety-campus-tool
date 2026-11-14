@@ -1,9 +1,9 @@
 import { Badge, Button, Card, List } from 'glassform';
+import { Map as MapIcon } from 'lucide-react';
 import { Link } from 'react-router';
 import { getCategory } from '../../data/categories.js';
 import { RISK } from '../../data/risk.js';
 import { formatHour } from '../../lib/format.js';
-import Icon from '../Icon.jsx';
 
 
 /**
@@ -36,7 +36,7 @@ export default function BlackSpotsCard({ spots, limit = 5 }) {
       className="h-full"
       actions={
         <Button as={Link} to="/map" size="sm">
-          <Icon name="map" />
+          <MapIcon />
           Map
         </Button>
       }

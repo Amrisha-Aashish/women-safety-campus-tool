@@ -1,8 +1,8 @@
 import { DescriptionList, GlassButton } from 'glassform';
+import { Check, Phone, Shield, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { useSosAlertStatus } from '../../hooks/useSosAlertStatus.js';
 import { nearestPlace, osmLink } from '../../lib/campusGeo.js';
 import { formatTime } from '../../lib/format.js';
-import Icon from '../Icon.jsx';
 
 const STEPS = [
   { status: 'ACTIVE', label: 'Alert sent' },
@@ -51,7 +51,7 @@ export default function SosResult({ alert, onDone }) {
   return (
     <div className="flex w-full max-w-md animate-fade-up flex-col items-center text-center">
       <span className="grid size-20 place-items-center rounded-full bg-emerald-500 text-white ring-[10px] ring-emerald-500/25">
-        <Icon name={status === 'ACKNOWLEDGED' ? 'shield' : 'check'} size={40} strokeWidth={2.6} />
+        {status === 'ACKNOWLEDGED' ? <Shield size={40} strokeWidth={2.6} /> : <Check size={40} strokeWidth={2.6} />}
       </span>
       <h2 className="mt-6 text-3xl font-extrabold" aria-live="polite">
         {title}
@@ -62,7 +62,7 @@ export default function SosResult({ alert, onDone }) {
 
       {approximate && (
         <div className="mt-5 flex items-start gap-3 rounded-2xl bg-amber-500/15 p-3 text-left text-sm text-amber-100 ring-1 ring-amber-500/30">
-          <Icon name="alert-triangle" size={18} className="mt-0.5 shrink-0" />
+          <TriangleAlert size={18} className="mt-0.5 shrink-0" />
           <p>Your exact location wasn’t shared, so the campus centre was sent. Tell security where you are when you call.</p>
         </div>
       )}
@@ -92,11 +92,11 @@ export default function SosResult({ alert, onDone }) {
 
       <div className="mt-6 flex flex-wrap justify-center gap-3">
         <GlassButton href="tel:112" tint="rgb(220 38 38 / 0.9)" className="text-white">
-          <Icon name="phone" />
+          <Phone />
           Call 112
         </GlassButton>
         <GlassButton onClick={onDone}>
-          <Icon name="shield-check" />
+          <ShieldCheck />
           I’m safe now
         </GlassButton>
       </div>

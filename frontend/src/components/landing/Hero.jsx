@@ -1,11 +1,11 @@
 import { GlassBadge } from 'glassform';
+import { Activity, EyeOff, MapPin } from 'lucide-react';
 import { CAMPUS_NAME } from '../../data/campusPlaces.js';
-import Icon from '../Icon.jsx';
 
 const POINTS = [
-  { icon: 'eye-off', label: 'Anonymous by default' },
-  { icon: 'activity', label: 'Live admin dashboard' },
-  { icon: 'map-pin', label: 'Black spots on a campus map' },
+  { icon: EyeOff, label: 'Anonymous by default' },
+  { icon: Activity, label: 'Live admin dashboard' },
+  { icon: MapPin, label: 'Black spots on a campus map' },
 ];
 
 /**
@@ -52,9 +52,9 @@ export default function Hero({ children }) {
         {children}
 
         <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-neutral-400">
-          {POINTS.map(({ icon, label }) => (
+          {POINTS.map(({ icon: PointIcon, label }) => (
             <li key={label} className="flex items-center gap-2">
-              <Icon name={icon} className="text-brand-300" />
+              <PointIcon className="text-brand-300" />
               {label}
             </li>
           ))}

@@ -1,6 +1,6 @@
 import { GlassButton, Card } from 'glassform';
+import { ArrowRight, Check, Lock, Phone } from 'lucide-react';
 import { Link } from 'react-router';
-import Icon from '../Icon.jsx';
 
 const PROMISES = [
   'Anonymous reports carry a pseudonym, never your name or roll number.',
@@ -19,13 +19,13 @@ export default function PrivacyBand() {
           <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
             <div>
               <span className="grid size-11 place-items-center rounded-xl bg-white/10 text-brand-200">
-                <Icon name="lock" size={20} />
+                <Lock size={20} />
               </span>
               <h2 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl">Speak up without being exposed.</h2>
               <ul className="mt-6 space-y-3 text-neutral-300">
                 {PROMISES.map((text) => (
                   <li key={text} className="flex gap-3">
-                    <Icon name="check" size={18} className="mt-0.5 shrink-0 text-emerald-300" />
+                    <Check size={18} className="mt-0.5 shrink-0 text-emerald-300" />
                     {text}
                   </li>
                 ))}
@@ -36,10 +36,10 @@ export default function PrivacyBand() {
               <div className="mt-2 flex flex-wrap gap-3">
                 <GlassButton as={Link} to="/report" prominent>
                   Report an incident
-                  <Icon name="arrow-right" />
+                  <ArrowRight />
                 </GlassButton>
                 <GlassButton href="tel:112">
-                  <Icon name="phone" />
+                  <Phone />
                   Call 112
                 </GlassButton>
               </div>

@@ -1,5 +1,4 @@
 import { BarList, Card, Progress } from 'glassform';
-import Icon from '../Icon.jsx';
 
 /**
  * Reports per category as ranked bars, with the open / resolved split under them.
@@ -11,7 +10,7 @@ export default function CategoryCard({ categories, open, resolved }) {
     label: c.label,
     value: c.count,
     tone: c.color,
-    icon: <Icon name={c.icon} style={{ color: c.color }} />,
+    icon: <c.icon style={{ color: c.color }} />,
   }));
   const total = open + resolved;
 

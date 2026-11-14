@@ -1,9 +1,9 @@
 import { StatCard } from 'glassform';
-import Icon from '../Icon.jsx';
+import { CircleAlert, CircleCheck, EyeOff, FileText } from 'lucide-react';
 
-const iconTile = (name, className) => (
+const iconTile = (TileIcon, className) => (
   <span className={`grid size-9 place-items-center rounded-xl ${className}`}>
-    <Icon name={name} size={18} />
+    <TileIcon size={18} />
   </span>
 );
 
@@ -28,7 +28,7 @@ export default function StatsRow({ summary, loading }) {
         label="Total reports"
         value={total}
         animate
-        icon={iconTile('file-text', 'bg-brand-500/15 text-brand-300')}
+        icon={iconTile(FileText, 'bg-brand-500/15 text-brand-300')}
         delta={weekDelta ?? undefined}
         deltaLabel={`${thisWeek} in the last 7 days`}
         invertTrend
@@ -42,7 +42,7 @@ export default function StatsRow({ summary, loading }) {
         label="Open"
         value={open}
         animate
-        icon={iconTile('alert-circle', 'bg-amber-500/15 text-amber-300')}
+        icon={iconTile(CircleAlert, 'bg-amber-500/15 text-amber-300')}
         deltaLabel="Waiting for action"
       />
       <StatCard
@@ -52,7 +52,7 @@ export default function StatsRow({ summary, loading }) {
         label="Resolved"
         value={resolved}
         animate
-        icon={iconTile('check-circle', 'bg-emerald-500/15 text-emerald-300')}
+        icon={iconTile(CircleCheck, 'bg-emerald-500/15 text-emerald-300')}
         deltaLabel={`${resolvedShare}% of all reports`}
       />
       <StatCard
@@ -63,7 +63,7 @@ export default function StatsRow({ summary, loading }) {
         value={anonymousShare}
         suffix="%"
         animate
-        icon={iconTile('eye-off', 'bg-fuchsia-500/15 text-fuchsia-300')}
+        icon={iconTile(EyeOff, 'bg-fuchsia-500/15 text-fuchsia-300')}
         deltaLabel="Shown with a pseudonym"
       />
     </div>

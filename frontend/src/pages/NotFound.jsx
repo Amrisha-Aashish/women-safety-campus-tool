@@ -1,6 +1,6 @@
 import { GlassButton } from 'glassform';
+import { House, Siren } from 'lucide-react';
 import { Link } from 'react-router';
-import Icon from '../components/Icon.jsx';
 import Logo from '../components/Logo.jsx';
 
 /** Shown for any unknown URL. */
@@ -15,14 +15,14 @@ export default function NotFound() {
         <p className="mt-2 max-w-sm text-neutral-400">The link may be old or mistyped. These will get you back on track.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <GlassButton as={Link} to="/" prominent>
-            <Icon name="home" />
+            <House />
             Home
           </GlassButton>
           <GlassButton as={Link} to="/dashboard">
             Dashboard
           </GlassButton>
           <GlassButton as={Link} to="/sos" tint="rgb(220 38 38 / 0.88)" className="text-white">
-            <Icon name="siren" />
+            <Siren />
             SOS
           </GlassButton>
         </div>

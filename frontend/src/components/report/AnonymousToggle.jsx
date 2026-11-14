@@ -1,6 +1,6 @@
 import { Switch } from 'glassform';
+import { EyeOff, User } from 'lucide-react';
 import { useId } from 'react';
-import Icon from '../Icon.jsx';
 
 /** "Report anonymously" switch with an explanation of what each choice means. */
 export default function AnonymousToggle({ checked, onChange }) {
@@ -8,7 +8,7 @@ export default function AnonymousToggle({ checked, onChange }) {
   return (
     <div className={`flex items-start gap-4 rounded-2xl p-4 ring-1 transition-colors ${checked ? 'bg-brand-500/15 ring-brand-400/30' : 'bg-neutral-50/5 ring-neutral-50/10'}`}>
       <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${checked ? 'bg-brand-600 text-white' : 'bg-neutral-50/5 text-neutral-300 ring-1 ring-neutral-50/10'}`}>
-        <Icon name={checked ? 'eye-off' : 'user'} size={20} />
+        {checked ? <EyeOff size={20} /> : <User size={20} />}
       </span>
       <div className="min-w-0 flex-1">
         <div className="flex items-center justify-between gap-3">

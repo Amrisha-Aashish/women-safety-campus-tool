@@ -1,7 +1,7 @@
 import { GlassButton } from 'glassform';
+import { Siren } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 import { navItemFor } from '../../data/navigation.js';
-import Icon from '../Icon.jsx';
 import ThemeToggle from '../ThemeToggle.jsx';
 import MobileNav from './MobileNav.jsx';
 
@@ -31,7 +31,7 @@ export default function PageToolbar({ children, actions }) {
           <ThemeToggle />
           {!onSos && (
             <GlassButton as={Link} to="/sos" size="sm" tint="rgb(220 38 38 / 0.88)" className="text-white">
-              <Icon name="siren" />
+              <Siren />
               SOS
             </GlassButton>
           )}

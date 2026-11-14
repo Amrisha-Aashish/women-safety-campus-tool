@@ -1,7 +1,7 @@
 import { Button, Card, DescriptionList, GlassButton } from 'glassform';
+import { ArrowRight, Check, FileText } from 'lucide-react';
 import { Link } from 'react-router';
 import { getCategory } from '../../data/categories.js';
-import Icon from '../Icon.jsx';
 
 /**
  * Confirmation shown after POST /api/reports succeeds.
@@ -13,7 +13,7 @@ export default function ReportResult({ report, onReset }) {
     <Card radius={24} padding="lg" className="animate-fade-up lg:col-span-2">
       <div className="flex flex-col items-center text-center">
         <span className="grid size-16 place-items-center rounded-full bg-emerald-500/15 text-emerald-300 ring-8 ring-emerald-500/10">
-          <Icon name="check" size={32} strokeWidth={2.6} />
+          <Check size={32} strokeWidth={2.6} />
         </span>
         <h2 className="mt-5 text-2xl font-extrabold">Report submitted</h2>
         <p className="mt-2 max-w-md text-neutral-300">
@@ -39,12 +39,12 @@ export default function ReportResult({ report, onReset }) {
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Button onClick={onReset}>
-          <Icon name="file-text" />
+          <FileText />
           Report something else
         </Button>
         <GlassButton as={Link} to="/dashboard" prominent>
           View dashboard
-          <Icon name="arrow-right" />
+          <ArrowRight />
         </GlassButton>
       </div>
     </Card>
