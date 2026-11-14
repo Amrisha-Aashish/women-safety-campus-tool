@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import AppSidebar from './AppSidebar.jsx';
+import AppTopbar from './AppTopbar.jsx';
 
 /**
  * Frame for the internal pages: a floating glass sidebar on the left and the
@@ -20,7 +21,10 @@ export default function AppLayout() {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <Outlet />
+        <AppTopbar />
+        <main className="flex-1 px-3 pt-4 pb-10 sm:px-5">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
