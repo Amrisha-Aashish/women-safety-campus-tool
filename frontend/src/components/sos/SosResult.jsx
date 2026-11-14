@@ -14,7 +14,7 @@ export default function SosResult({ alert, onDone }) {
         <Icon name="check" size={40} strokeWidth={2.6} />
       </span>
       <h2 className="mt-6 text-3xl font-extrabold">Alert sent</h2>
-      <p className="mt-2 text-slate-300">Help is on the way. Stay where people can see you and keep your phone with you.</p>
+      <p className="mt-2 text-neutral-300">Help is on the way. Stay where people can see you and keep your phone with you.</p>
       {alert.demo && (
         <Badge tone="warning" className="mt-4">
           Demo mode: no alert reaches security until the SOS API is connected

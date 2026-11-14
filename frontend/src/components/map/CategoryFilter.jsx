@@ -32,7 +32,7 @@ export default function CategoryFilter({ selected, onChange, counts }) {
               onChange={(on) => toggle(c.value, on)}
               colors={{ accent: c.color }}
             />
-            <span className="text-sm text-slate-400 tabular-nums">{counts[c.value] ?? 0}</span>
+            <span className="text-sm text-neutral-400 tabular-nums">{counts[c.value] ?? 0}</span>
           </div>
         ))}
       </div>

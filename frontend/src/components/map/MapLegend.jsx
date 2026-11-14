@@ -7,8 +7,8 @@ import { RISK } from '../../data/risk.js';
  */
 export default function MapLegend({ reports, places }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 px-4 py-3 text-xs text-slate-400">
-      <span className="font-semibold text-slate-200">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 px-4 py-3 text-xs text-neutral-400">
+      <span className="font-semibold text-neutral-200">
         {reports} reports · {places} places
       </span>
       <span className="hidden h-4 w-px bg-white/10 sm:block" aria-hidden="true" />

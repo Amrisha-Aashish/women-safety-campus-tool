@@ -21,7 +21,7 @@ export default function ReportAside() {
           </span>
         }
       >
-        <ul className="space-y-2 text-sm text-slate-300">
+        <ul className="space-y-2 text-sm text-neutral-300">
           <li>Anonymous reports never store your name.</li>
           <li>Your location is read only if you press “Use my location”.</li>
           <li>Only the campus safety team sees full report details.</li>

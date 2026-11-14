@@ -17,7 +17,7 @@ export default function SiteHeader() {
         brand={<Logo />}
         links={LINKS}
         align="center"
-        tint="rgb(13 16 32 / 0.55)"
+        tint="rgb(18 18 18 / 0.55)"
         className="text-white"
         actions={
           <>

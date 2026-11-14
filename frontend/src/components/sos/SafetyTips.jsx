@@ -11,7 +11,7 @@ const TIPS = [
 export default function SafetyTips() {
   return (
     <Card radius={22} title="While you wait" padding="sm" className="p-5">
-      <ul className="space-y-2.5 text-sm text-slate-300">
+      <ul className="space-y-2.5 text-sm text-neutral-300">
         {TIPS.map((tip) => (
           <li key={tip} className="flex gap-2.5">
             <Icon name="check" size={16} className="mt-0.5 shrink-0 text-brand-300" />

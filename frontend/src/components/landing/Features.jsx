@@ -27,7 +27,7 @@ export default function Features() {
                 badge={soon && <Badge tone="warning">Coming soon</Badge>}
               >
                 <h3 className="mt-1 text-base font-bold">{title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{text}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-neutral-300">{text}</p>
               </Card>
             </li>
           ))}

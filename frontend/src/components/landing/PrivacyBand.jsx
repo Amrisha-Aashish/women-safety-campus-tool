@@ -22,7 +22,7 @@ export default function PrivacyBand() {
                 <Icon name="lock" size={20} />
               </span>
               <h2 className="mt-5 text-3xl font-extrabold tracking-tight sm:text-4xl">Speak up without being exposed.</h2>
-              <ul className="mt-6 space-y-3 text-slate-300">
+              <ul className="mt-6 space-y-3 text-neutral-300">
                 {PROMISES.map((text) => (
                   <li key={text} className="flex gap-3">
                     <Icon name="check" size={18} className="mt-0.5 shrink-0 text-emerald-300" />

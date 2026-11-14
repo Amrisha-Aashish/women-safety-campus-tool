@@ -15,7 +15,7 @@ export default function HowItWorks() {
           {STEPS.map((step, i) => (
             <li key={step.title} className="flex">
               <Card radius={22} className="w-full" eyebrow={`Step 0${i + 1}`} title={step.title}>
-                <p className="text-sm leading-relaxed text-slate-300">{step.text}</p>
+                <p className="text-sm leading-relaxed text-neutral-300">{step.text}</p>
               </Card>
             </li>
           ))}

@@ -32,7 +32,7 @@ export default function TimeZonesCard({ hours, bands }) {
             </div>
           ))}
         </div>
-        <div className="mt-2 flex justify-between text-[11px] text-slate-400">
+        <div className="mt-2 flex justify-between text-[11px] text-neutral-400">
           {AXIS.map((h) => (
             <span key={h}>{formatHour(h)}</span>
           ))}
@@ -46,11 +46,11 @@ export default function TimeZonesCard({ hours, bands }) {
             className={`rounded-xl px-3 py-2.5 ring-1 ${band.red ? 'bg-red-500/10 ring-red-500/30' : 'bg-white/5 ring-white/10'}`}
           >
             <div className="flex items-center justify-between gap-1">
-              <span className="text-xs font-semibold text-slate-200">{band.label}</span>
+              <span className="text-xs font-semibold text-neutral-200">{band.label}</span>
               {band.red && <span className="size-2 rounded-full bg-red-500" aria-label="Red time zone" />}
             </div>
             <div className="mt-1 font-display text-xl font-bold">{band.count}</div>
-            <div className="text-[11px] text-slate-400">
+            <div className="text-[11px] text-neutral-400">
               {band.range} · {band.share}%
             </div>
           </li>

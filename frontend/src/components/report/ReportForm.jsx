@@ -63,7 +63,7 @@ export default function ReportForm({ form }) {
         )}
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-slate-400">Fields marked * are required.</p>
+          <p className="text-xs text-neutral-400">Fields marked * are required.</p>
           <GlassButton type="submit" prominent size="lg" state={form.status === 'sending' ? 'loading' : 'idle'}>
             <Icon name="send" />
             Submit report

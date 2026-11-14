@@ -19,7 +19,6 @@ export default function Hero({ children }) {
       {/* Background: aurora glows and a faint grid. */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-brand-600/40 blur-[120px]" />
-        <div className="absolute top-72 -left-32 h-[340px] w-[440px] rounded-full bg-sky-500/20 blur-[100px]" />
         <div className="absolute top-56 -right-40 h-[380px] w-[480px] rounded-full bg-rose-500/25 blur-[110px]" />
         <div
           className="absolute inset-0 opacity-[0.07] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]"
@@ -43,7 +42,7 @@ export default function Hero({ children }) {
               Act before it happens.
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-slate-300 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-neutral-300 sm:text-lg">
             CCTV and guards react after an incident. SafeCampus works before one: students report safety concerns,
             anonymously or by name, and every report feeds a live dashboard and campus map that reveal black spots
             and red time zones, so they can be fixed in time.
@@ -52,7 +51,7 @@ export default function Hero({ children }) {
 
         {children}
 
-        <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-slate-400">
+        <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-neutral-400">
           {POINTS.map(({ icon, label }) => (
             <li key={label} className="flex items-center gap-2">
               <Icon name={icon} className="text-brand-300" />

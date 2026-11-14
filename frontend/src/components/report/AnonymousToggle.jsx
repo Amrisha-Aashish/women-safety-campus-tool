@@ -7,7 +7,7 @@ export default function AnonymousToggle({ checked, onChange }) {
   const id = useId();
   return (
     <div className={`flex items-start gap-4 rounded-2xl p-4 ring-1 transition-colors ${checked ? 'bg-brand-500/15 ring-brand-400/30' : 'bg-white/5 ring-white/10'}`}>
-      <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${checked ? 'bg-brand-600 text-white' : 'bg-white/5 text-slate-300 ring-1 ring-white/10'}`}>
+      <span className={`grid size-10 shrink-0 place-items-center rounded-xl ${checked ? 'bg-brand-600 text-white' : 'bg-white/5 text-neutral-300 ring-1 ring-white/10'}`}>
         <Icon name={checked ? 'eye-off' : 'user'} size={20} />
       </span>
       <div className="min-w-0 flex-1">
@@ -17,7 +17,7 @@ export default function AnonymousToggle({ checked, onChange }) {
           </p>
           <Switch checked={checked} onChange={onChange} aria-labelledby={`${id}-label`} aria-describedby={`${id}-desc`} />
         </div>
-        <p id={`${id}-desc`} className="mt-1 text-sm text-slate-300">
+        <p id={`${id}-desc`} className="mt-1 text-sm text-neutral-300">
           {checked
             ? 'Your identity is hidden. The report is shown with a random pseudonym such as “QuietLotus4821”.'
             : 'The report is linked to you, so the safety team can follow up with you.'}

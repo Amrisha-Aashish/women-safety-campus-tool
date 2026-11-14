@@ -31,7 +31,7 @@ export default function CategoryCard({ categories, open, resolved }) {
               : [{ value: 0 }]
           }
         />
-        <div className="mt-3 flex gap-5 text-sm text-slate-300">
+        <div className="mt-3 flex gap-5 text-sm text-neutral-300">
           <span className="flex items-center gap-2">
             <span className="size-2.5 rounded-full bg-(--lg-warning)" /> Open <b className="text-white">{open}</b>
           </span>

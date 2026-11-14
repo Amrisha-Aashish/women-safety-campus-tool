@@ -2,5 +2,5 @@
 export const RISK = {
   high: { tone: 'negative', label: 'High risk', color: '#f87171' },
   medium: { tone: 'warning', label: 'Medium risk', color: '#fbbf24' },
-  low: { tone: 'neutral', label: 'Low risk', color: '#94a3b8' },
+  low: { tone: 'neutral', label: 'Low risk', color: '#a3a3a3' },
 };
