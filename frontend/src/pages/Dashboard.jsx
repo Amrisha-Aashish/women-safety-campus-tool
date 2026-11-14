@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import DataSourceBar from '../components/app/DataSourceBar.jsx';
+import BlackSpotsCard from '../components/dashboard/BlackSpotsCard.jsx';
 import CategoryCard from '../components/dashboard/CategoryCard.jsx';
 import StatsRow from '../components/dashboard/StatsRow.jsx';
 import TimeZonesCard from '../components/dashboard/TimeZonesCard.jsx';
 import { useReports } from '../hooks/useReports.js';
-import { byCategory, byHour, redTimeZones, summarize } from '../lib/reportStats.js';
+import { byCategory, byHour, hotspots, redTimeZones, summarize } from '../lib/reportStats.js';
 
 /** Admin dashboard: live totals, categories, red time zones, black spots and recent reports. */
 export default function Dashboard() {
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const categories = useMemo(() => byCategory(reports), [reports]);
   const hours = useMemo(() => byHour(reports), [reports]);
   const bands = useMemo(() => redTimeZones(reports), [reports]);
+  const spots = useMemo(() => hotspots(reports), [reports]);
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-5">
@@ -22,6 +24,9 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-3">
         <CategoryCard categories={categories} open={summary.open} resolved={summary.resolved} />
         <TimeZonesCard hours={hours} bands={bands} />
+      </div>
+      <div className="grid gap-5 lg:grid-cols-3">
+        <BlackSpotsCard spots={spots} />
       </div>
     </div>
   );
