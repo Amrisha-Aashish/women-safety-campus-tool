@@ -18,6 +18,16 @@ export function timeAgo(date, now = Date.now()) {
   return new Date(date).toLocaleDateString(LOCALE, { day: 'numeric', month: 'short' });
 }
 
+/** "45 s", "11 min", "1 h 5 min" for a length of time in milliseconds. */
+export function formatDuration(ms) {
+  const s = Math.max(0, Math.round(ms / 1000));
+  if (s < 60) return `${s} s`;
+  const m = Math.round(s / 60);
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60);
+  return m % 60 ? `${h} h ${m % 60} min` : `${h} h`;
+}
+
 /** "9 PM" for an hour 0–23. */
 export function formatHour(hour) {
   const h = hour % 12 || 12;
