@@ -1,6 +1,6 @@
 // Geometry for the campus: the boundary check, and the Web Mercator projection
 // the map uses so report dots line up with the map tiles underneath.
-import { CAMPUS_BOUNDARY } from '../data/campusPlaces.js';
+import { CAMPUS_BOUNDARY, CAMPUS_PLACES } from '../data/campusPlaces.js';
 
 /** True when the point lies inside `polygon` ([lat, lng] corners). Ray casting. */
 export function isInsidePolygon(latitude, longitude, polygon = CAMPUS_BOUNDARY) {
@@ -18,6 +18,34 @@ export function isInsidePolygon(latitude, longitude, polygon = CAMPUS_BOUNDARY) 
 export function isOnCampus(latitude, longitude) {
   return Number.isFinite(latitude) && Number.isFinite(longitude) && isInsidePolygon(latitude, longitude);
 }
+
+/** Distance in metres between two coordinates (haversine). */
+export function distanceM(lat1, lng1, lat2, lng2) {
+  const rad = Math.PI / 180;
+  const a =
+    Math.sin(((lat2 - lat1) * rad) / 2) ** 2 +
+    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(((lng2 - lng1) * rad) / 2) ** 2;
+  return 2 * 6_371_000 * Math.asin(Math.sqrt(a));
+}
+
+/**
+ * The named campus place closest to a coordinate, so an alert reads
+ * "near Main Gate" instead of bare numbers.
+ * @returns {{ place: typeof CAMPUS_PLACES[number], distance: number, onCampus: boolean } | null}
+ */
+export function nearestPlace(latitude, longitude) {
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  let best = null;
+  for (const place of CAMPUS_PLACES) {
+    const distance = distanceM(latitude, longitude, place.latitude, place.longitude);
+    if (!best || distance < best.distance) best = { place, distance };
+  }
+  return { ...best, distance: Math.round(best.distance), onCampus: isInsidePolygon(latitude, longitude) };
+}
+
+/** OpenStreetMap link centred on a coordinate. */
+export const osmLink = (latitude, longitude) =>
+  `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=18/${latitude}/${longitude}`;
 
 // ---- Web Mercator: the same pixel grid as slippy-map tiles ----
 
