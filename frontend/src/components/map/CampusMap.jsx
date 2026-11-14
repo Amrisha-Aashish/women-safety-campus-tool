@@ -2,15 +2,15 @@ import { useId } from 'react';
 import { CAMPUS_PLACES } from '../../data/campusPlaces.js';
 import { getCategory } from '../../data/categories.js';
 import { RISK } from '../../data/risk.js';
-import { BASEMAPS, BOUNDARY_PATH, CAMPUS_TILES, MAP_VIEWBOX, project, TILE_ZOOM, UNITS_PER_M } from '../../lib/campusGeo.js';
+import { BOUNDARY_PATH, CAMPUS_TILES, MAP_VIEWBOX, project, STREET_TILES, TILE_ZOOM, UNITS_PER_M } from '../../lib/campusGeo.js';
 import { formatDateTime } from '../../lib/format.js';
 
 /** Risk zone radius in metres: grows with the number of reports at a place. */
-const zoneRadiusM = (count) => Math.min(120, 28 + count * 8);
+const zoneRadiusM = (count) => Math.min(70, 18 + count * 5);
 const SCALE_M = 100;
 
 /**
- * Campus map: real map tiles (satellite or streets) cut to the campus outline,
+ * Campus map: OpenStreetMap street tiles cut to the campus outline,
  * with place labels, risk zones and one dot per report drawn on top as SVG.
  * Only the campus is shown; nothing outside the boundary is drawn.
  *
@@ -23,7 +23,6 @@ const SCALE_M = 100;
  *   onSelectSpot?: (name: string) => void,
  *   selectedReport?: string|null,
  *   onSelectReport?: (id: string) => void,
- *   basemap?: keyof BASEMAPS,
  *   className?: string,
  * }} props
  */
@@ -36,12 +35,8 @@ export default function CampusMap({
   onSelectSpot,
   selectedReport,
   onSelectReport,
-  basemap = 'satellite',
   className,
 }) {
-  const tiles = BASEMAPS[basemap] ?? BASEMAPS.satellite;
-  // Street maps are pale, so labels flip to dark text on a white halo.
-  const light = basemap === 'streets';
   const id = useId().replace(/:/g, '');
   const { x, y, width, height } = MAP_VIEWBOX;
   const activate = (fn) => (e) => {
@@ -74,8 +69,8 @@ export default function CampusMap({
       <g clipPath={`url(#${id}-clip)`} aria-hidden="true">
         {CAMPUS_TILES.map((t) => (
           <image
-            key={`${basemap}-${t.key}`}
-            href={tiles.url(t.tx, t.ty, TILE_ZOOM)}
+            key={t.key}
+            href={STREET_TILES.url(t.tx, t.ty, TILE_ZOOM)}
             x={t.x}
             y={t.y}
             // A hair of overlap hides seams between tiles.
@@ -84,7 +79,7 @@ export default function CampusMap({
             preserveAspectRatio="none"
           />
         ))}
-        <rect x={x} y={y} width={width} height={height} fill="#0a0c16" opacity={basemap === 'streets' ? 0.15 : 0.28} />
+        <rect x={x} y={y} width={width} height={height} fill="#0a0c16" opacity="0.12" />
       </g>
       <path d={BOUNDARY_PATH} fill="none" stroke="rgb(255 255 255 / 0.7)" strokeWidth="2.5" strokeLinejoin="round" />
 
@@ -140,8 +135,8 @@ export default function CampusMap({
                 textAnchor="middle"
                 fontSize="21"
                 fontWeight="500"
-                fill={light ? '#0f172a' : '#f1f5f9'}
-                stroke={light ? '#fff' : '#0a0c16'}
+                fill="#0f172a"
+                stroke="#fff"
                 strokeOpacity="0.85"
                 strokeWidth="6"
                 paintOrder="stroke"
@@ -185,7 +180,7 @@ export default function CampusMap({
         })}
 
       <text x={x + 8} y={height + y - 10} fontSize="15" fill="#94a3b8">
-        {tiles.attribution}
+        {STREET_TILES.attribution}
       </text>
 
       {/* North arrow and scale */}

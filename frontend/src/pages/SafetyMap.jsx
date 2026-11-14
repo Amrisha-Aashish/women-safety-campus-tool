@@ -6,15 +6,11 @@ import CategoryFilter from '../components/map/CategoryFilter.jsx';
 import MapLegend from '../components/map/MapLegend.jsx';
 import ReportDetail from '../components/map/ReportDetail.jsx';
 import SpotList from '../components/map/SpotList.jsx';
+import { CAMPUS_NAME } from '../data/campusPlaces.js';
 import { CATEGORIES } from '../data/categories.js';
 import { useReports } from '../hooks/useReports.js';
 import { isOnCampus } from '../lib/campusGeo.js';
 import { hotspots } from '../lib/reportStats.js';
-
-const BASEMAP_OPTIONS = [
-  { value: 'satellite', label: 'Satellite' },
-  { value: 'streets', label: 'Streets' },
-];
 
 const LAYERS = [
   { value: 'all', label: 'All' },
@@ -23,14 +19,13 @@ const LAYERS = [
 ];
 
 /**
- * Safety map: reported incidents and risk zones ("black spots") on a satellite or
- * street map of the campus. Only the campus is shown, so reports outside its boundary are left out.
+ * Safety map: reported incidents and risk zones ("black spots") on a street map
+ * of the campus. Only the campus is shown, so reports outside its boundary are left out.
  * Risk zones are computed in the browser for now; the analytics service will supply them later.
  */
 export default function SafetyMap() {
   const [source, setSource] = useState('live');
   const [layer, setLayer] = useState('all');
-  const [basemap, setBasemap] = useState('satellite');
   const [categories, setCategories] = useState(() => new Set(CATEGORIES.map((c) => c.value)));
   const [selectedSpot, setSelectedSpot] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null);
@@ -65,8 +60,7 @@ export default function SafetyMap() {
               onSelectSpot={selectSpot}
               selectedReport={selectedReport}
               onSelectReport={selectReport}
-              basemap={basemap}
-              className="absolute inset-0 size-full p-2 pt-[7.25rem] sm:p-3 sm:pt-16"
+              className="absolute inset-0 size-full p-2 pt-16 sm:p-3 sm:pt-16"
             />
           </div>
 
@@ -75,9 +69,9 @@ export default function SafetyMap() {
             <div className="pointer-events-auto">
               <GlassSegmented options={LAYERS} value={layer} onChange={setLayer} aria-label="Map layers" />
             </div>
-            <div className="pointer-events-auto">
-              <GlassSegmented options={BASEMAP_OPTIONS} value={basemap} onChange={setBasemap} aria-label="Map style" />
-            </div>
+            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-white/10">
+              {CAMPUS_NAME}
+            </p>
           </div>
           {report && (
             <div className="pointer-events-none absolute inset-x-3 bottom-14 flex justify-end sm:bottom-16">

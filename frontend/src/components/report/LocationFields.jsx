@@ -55,7 +55,7 @@ export default function LocationFields({ values, set, errors }) {
       <TextField
         label="Location name"
         required
-        placeholder="e.g. East Gate Walkway"
+        placeholder="e.g. Main Gate"
         value={values.locationName}
         onChange={(locationName) => set({ locationName })}
         error={errors.locationName}
@@ -67,7 +67,7 @@ export default function LocationFields({ values, set, errors }) {
           label="Latitude"
           required
           inputMode="decimal"
-          placeholder="23.3441"
+          placeholder="18.6215"
           value={values.latitude}
           onChange={(latitude) => set({ latitude })}
           error={errors.latitude}
@@ -76,7 +76,7 @@ export default function LocationFields({ values, set, errors }) {
           label="Longitude"
           required
           inputMode="decimal"
-          placeholder="85.3096"
+          placeholder="73.9108"
           value={values.longitude}
           onChange={(longitude) => set({ longitude })}
           error={errors.longitude}

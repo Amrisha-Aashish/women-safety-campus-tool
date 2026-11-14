@@ -22,7 +22,7 @@ export function validate(values) {
   const text = values.description.trim();
   if (text.length < 10) errors.description = 'Please describe what happened in at least 10 characters.';
   else if (text.length > 2000) errors.description = 'Keep the description under 2000 characters.';
-  if (!values.locationName.trim()) errors.locationName = 'Name the place, e.g. “East Gate Walkway”.';
+  if (!values.locationName.trim()) errors.locationName = 'Name the place, e.g. “Main Gate”.';
   const lat = Number(values.latitude);
   const lng = Number(values.longitude);
   if (values.latitude === '' || !Number.isFinite(lat) || lat < -90 || lat > 90) errors.latitude = 'Latitude must be between -90 and 90.';

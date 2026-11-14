@@ -62,18 +62,10 @@ export const BOUNDARY_PATH = `${CAMPUS_BOUNDARY.map(([lat, lng], i) => {
   return `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`;
 }).join(' ')} Z`;
 
-/** Map tile sources. `url(x, y, z)` builds one tile's address. */
-export const BASEMAPS = {
-  satellite: {
-    label: 'Satellite',
-    url: (x, y, z) => `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`,
-    attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
-  },
-  streets: {
-    label: 'Streets',
-    url: (x, y, z) => `https://tile.openstreetmap.org/${z}/${x}/${y}.png`,
-    attribution: '© OpenStreetMap contributors',
-  },
+/** Street map tiles (OpenStreetMap). `url(x, y, z)` builds one tile's address. */
+export const STREET_TILES = {
+  url: (x, y, z) => `https://tile.openstreetmap.org/${z}/${x}/${y}.png`,
+  attribution: '© OpenStreetMap contributors',
 };
 
 /** The tiles that cover the campus, positioned in map units: [{ key, tx, ty, x, y, size }]. */
