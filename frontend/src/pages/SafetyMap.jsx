@@ -48,7 +48,7 @@ export default function SafetyMap() {
     <div className="mx-auto flex max-w-7xl flex-col gap-5">
       <DataSourceBar source={source} onSourceChange={setSource} status={status} updatedAt={updatedAt} onRefresh={refresh} />
 
-      <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card radius={24} padding="none" className="relative overflow-hidden">
           <div className="relative h-[520px] w-full bg-neutral-900 sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
             <CampusMap
