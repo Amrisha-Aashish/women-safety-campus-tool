@@ -14,7 +14,7 @@ export default function AppLayout() {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <main className="flex-1 px-3 pt-3 pb-10 sm:px-5">
+        <main className="flex-1 px-4 pt-6 pb-10 sm:px-6 lg:px-8 lg:pt-10">
           <Outlet />
         </main>
       </div>
