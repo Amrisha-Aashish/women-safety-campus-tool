@@ -1,0 +1,236 @@
+@import 'tailwindcss';
+
+/* Design tokens for layout and text. UI components come from glassform; its
+   own --lg-* tokens are set further down so both share one palette. */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand: a calm violet-indigo used for primary actions and focus. */
+  --color-brand-50: #f3f2ff;
+  --color-brand-100: #e9e6ff;
+  --color-brand-200: #d5d0ff;
+  --color-brand-300: #b6abff;
+  --color-brand-400: #927cfd;
+  --color-brand-500: #7454f8;
+  --color-brand-600: #6338ee;
+  --color-brand-700: #5428d6;
+  --color-brand-800: #4621b0;
+  --color-brand-900: #3a1d8e;
+
+  /* Ink: neutral near-blacks for the sidebar and dark sections. */
+  --color-ink-950: #080808;
+  --color-ink-900: #111111;
+  --color-ink-800: #1a1a1a;
+  --color-ink-700: #262626;
+
+  /* App canvas: the solid background of every page. */
+  --color-canvas: #0a0a0a;
+
+  --animate-sos-ring: sos-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  --animate-fade-up: fade-up 0.4s ease-out both;
+
+  @keyframes sos-ring {
+    0% { transform: scale(1); opacity: 0.55; }
+    100% { transform: scale(1.7); opacity: 0; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* glassform theme (dark): brand accent, status colours bright enough for a
+   dark page, and solid surfaces a step lighter than the canvas. The selector
+   matches glassform's own dark rule so these win (this file loads after it). */
+:root[data-theme='dark'],
+.dark {
+  color-scheme: dark;
+  --lg-accent: #7c5cff;
+  --lg-on-accent: #fff;
+  --lg-text: #ededed;
+  --lg-positive: #34d399;
+  --lg-negative: #f87171;
+  --lg-warning: #fbbf24;
+  --lg-info: #38bdf8;
+  --lg-switch-on: #7c5cff;
+  --lg-solid: #161616;
+  --lg-solid-border: rgb(255 255 255 / 0.07);
+}
+
+/* ---- Themes -------------------------------------------------------------
+   Dark is the default. The light theme flips the colour scales the UI uses
+   for text and surfaces (neutral fully; the pale shades of red, emerald,
+   amber, fuchsia and brand), so the same classes read well on both.
+   Elements marked .dark (hero, privacy band, SOS panel, popovers)
+   stay dark in both themes. */
+
+/* Category and risk colours: bright on dark, deeper on light. */
+:root,
+:root[data-theme='light'] .dark {
+  --cat-harassment: #f472b6;
+  --cat-stalking: #a78bfa;
+  --cat-unsafe: #fbbf24;
+  --cat-emergency: #f87171;
+  --cat-other: #22d3ee;
+  --risk-high: #f87171;
+  --risk-medium: #fbbf24;
+  --risk-low: #a3a3a3;
+  --sidebar-tint: rgb(22 22 22 / 0.96);
+  --sidebar-sos-text: #fecaca;
+  --sidebar-sos-bg: rgb(220 38 38 / 0.22);
+}
+
+:root[data-theme='light'] {
+  --sidebar-tint: rgb(255 255 255 / 0.92);
+  --sidebar-sos-text: #b91c1c;
+  --sidebar-sos-bg: rgb(220 38 38 / 0.1);
+  color-scheme: light;
+  --color-canvas: #f5f5f5;
+  --cat-harassment: #db2777;
+  --cat-stalking: #7c3aed;
+  --cat-unsafe: #d97706;
+  --cat-emergency: #dc2626;
+  --cat-other: #0891b2;
+  --risk-high: #dc2626;
+  --risk-medium: #d97706;
+  --risk-low: #737373;
+
+  /* glassform (light) */
+  --lg-accent: #6338ee;
+  --lg-on-accent: #fff;
+  --lg-text: #171717;
+  --lg-positive: #059669;
+  --lg-negative: #dc2626;
+  --lg-warning: #b45309;
+  --lg-info: #0284c7;
+  --lg-switch-on: #6338ee;
+  --lg-solid: #fff;
+  --lg-solid-border: rgb(0 0 0 / 0.08);
+
+  --color-neutral-50: oklch(14.5% 0 none);
+  --color-neutral-100: oklch(20.5% 0 none);
+  --color-neutral-200: oklch(26.9% 0 none);
+  --color-neutral-300: oklch(37.1% 0 none);
+  --color-neutral-400: oklch(43.9% 0 none);
+  --color-neutral-500: oklch(55.6% 0 none);
+  --color-neutral-600: oklch(70.8% 0 none);
+  --color-neutral-700: oklch(87% 0 none);
+  --color-neutral-800: oklch(92.2% 0 none);
+  --color-neutral-900: oklch(97% 0 none);
+  --color-neutral-950: oklch(98.5% 0 none);
+  --color-red-50: oklch(25.8% 0.092 26.042);
+  --color-red-100: oklch(39.6% 0.141 25.723);
+  --color-red-200: oklch(44.4% 0.177 26.899);
+  --color-red-300: oklch(50.5% 0.213 27.518);
+  --color-red-400: oklch(57.7% 0.245 27.325);
+  --color-emerald-50: oklch(26.2% 0.051 172.552);
+  --color-emerald-100: oklch(37.8% 0.077 168.94);
+  --color-emerald-200: oklch(43.2% 0.095 166.913);
+  --color-emerald-300: oklch(50.8% 0.118 165.612);
+  --color-emerald-400: oklch(59.6% 0.145 163.225);
+  --color-amber-50: oklch(27.9% 0.077 45.635);
+  --color-amber-100: oklch(41.4% 0.112 45.904);
+  --color-amber-200: oklch(47.3% 0.137 46.201);
+  --color-amber-300: oklch(55.5% 0.163 48.998);
+  --color-amber-400: oklch(66.6% 0.179 58.318);
+  --color-fuchsia-50: oklch(29.3% 0.136 325.661);
+  --color-fuchsia-100: oklch(40.1% 0.17 325.612);
+  --color-fuchsia-200: oklch(45.2% 0.211 324.591);
+  --color-fuchsia-300: oklch(51.8% 0.253 323.949);
+  --color-fuchsia-400: oklch(59.1% 0.293 322.896);
+  --color-brand-50: #2b1470;
+  --color-brand-100: #3a1d8e;
+  --color-brand-200: #4621b0;
+  --color-brand-300: #5428d6;
+  --color-brand-400: #6338ee;
+}
+
+/* Dark islands keep the original scales inside the light theme. */
+:root[data-theme='light'] .dark {
+  color-scheme: dark;
+  --color-canvas: #0a0a0a;
+  --color-neutral-50: oklch(98.5% 0 none);
+  --color-neutral-100: oklch(97% 0 none);
+  --color-neutral-200: oklch(92.2% 0 none);
+  --color-neutral-300: oklch(87% 0 none);
+  --color-neutral-400: oklch(70.8% 0 none);
+  --color-neutral-500: oklch(55.6% 0 none);
+  --color-neutral-600: oklch(43.9% 0 none);
+  --color-neutral-700: oklch(37.1% 0 none);
+  --color-neutral-800: oklch(26.9% 0 none);
+  --color-neutral-900: oklch(20.5% 0 none);
+  --color-neutral-950: oklch(14.5% 0 none);
+  --color-red-50: oklch(97.1% 0.013 17.38);
+  --color-red-100: oklch(93.6% 0.032 17.717);
+  --color-red-200: oklch(88.5% 0.062 18.334);
+  --color-red-300: oklch(80.8% 0.114 19.571);
+  --color-red-400: oklch(70.4% 0.191 22.216);
+  --color-emerald-50: oklch(97.9% 0.021 166.113);
+  --color-emerald-100: oklch(95% 0.052 163.051);
+  --color-emerald-200: oklch(90.5% 0.093 164.15);
+  --color-emerald-300: oklch(84.5% 0.143 164.978);
+  --color-emerald-400: oklch(76.5% 0.177 163.223);
+  --color-amber-50: oklch(98.7% 0.022 95.277);
+  --color-amber-100: oklch(96.2% 0.059 95.617);
+  --color-amber-200: oklch(92.4% 0.12 95.746);
+  --color-amber-300: oklch(87.9% 0.169 91.605);
+  --color-amber-400: oklch(82.8% 0.189 84.429);
+  --color-fuchsia-50: oklch(97.7% 0.017 320.058);
+  --color-fuchsia-100: oklch(95.2% 0.037 318.852);
+  --color-fuchsia-200: oklch(90.3% 0.076 319.62);
+  --color-fuchsia-300: oklch(83.3% 0.145 321.434);
+  --color-fuchsia-400: oklch(74% 0.238 322.16);
+  --color-brand-50: #f3f2ff;
+  --color-brand-100: #e9e6ff;
+  --color-brand-200: #d5d0ff;
+  --color-brand-300: #b6abff;
+  --color-brand-400: #927cfd;
+}
+
+/* Glass light stays still: glassform moves its highlight and rim light with the
+   pointer (--lg-x, --lg-y, --lg-angle set inline on mouse move). Pinning the
+   variables with !important keeps the static sheen without the movement, and
+   the highlight no longer brightens on hover. */
+.glass {
+  --lg-x: 28% !important;
+  --lg-y: -30% !important;
+  --lg-angle: 135deg !important;
+}
+.glass:hover::before {
+  opacity: 0.75;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-canvas font-sans text-neutral-100;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  ::selection {
+    @apply bg-brand-500/40 text-white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Campus map: visible keyboard focus on report dots and zones. */
+.sc-map [role='button'] {
+  outline: none;
+}
+.sc-map [role='button']:focus-visible circle,
+.sc-map circle[role='button']:focus-visible {
+  stroke: #fff;
+  stroke-width: 3;
+}

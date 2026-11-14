@@ -1,0 +1,119 @@
+import { Check, CircleAlert, Locate, MapPin, TriangleAlert } from 'lucide-react';
+import { useState } from 'react';
+import { Badge, Button, Select, TextField } from 'glassform';
+import { CAMPUS_PLACES } from '../../data/campusPlaces.js';
+import { useGeolocation } from '../../hooks/useGeolocation.js';
+import { isOnCampus } from '../../lib/campusGeo.js';
+
+const PLACE_OPTIONS = [
+  ...CAMPUS_PLACES.map((p) => ({ value: p.id, label: p.name })),
+  { value: 'custom', label: 'Somewhere else', description: 'Type the place and coordinates below' },
+];
+
+/**
+ * Where it happened: pick a known campus place (fills everything in), or type
+ * a place name and coordinates, or use the browser's location. Points outside
+ * the campus boundary are rejected.
+ * @param {{ values: object, set: (patch: object) => void, errors: object }} props
+ */
+export default function LocationFields({ values, set, errors }) {
+  const geo = useGeolocation();
+  const [offCampus, setOffCampus] = useState(false);
+
+  const pickPlace = (placeId) => {
+    const place = CAMPUS_PLACES.find((p) => p.id === placeId);
+    if (place) set({ placeId, locationName: place.name, latitude: String(place.latitude), longitude: String(place.longitude) });
+    else set({ placeId, locationName: '', latitude: '', longitude: '' });
+  };
+
+  const useMyLocation = async () => {
+    const coords = await geo.locate();
+    setOffCampus(Boolean(coords) && !isOnCampus(coords.latitude, coords.longitude));
+    if (coords && isOnCampus(coords.latitude, coords.longitude)) {
+      set({
+        latitude: String(coords.latitude),
+        longitude: String(coords.longitude),
+        placeId: values.placeId ?? 'custom',
+        locationName: values.locationName || 'My current location',
+      });
+    }
+  };
+
+  return (
+    <fieldset className="flex flex-col gap-5">
+      <legend className="mb-4 font-display text-lg font-bold">Where did it happen?</legend>
+
+      <Select
+        label="Campus place"
+        placeholder="Choose a place on campus"
+        options={PLACE_OPTIONS}
+        value={values.placeId}
+        onChange={pickPlace}
+        searchable
+      />
+
+      <TextField
+        label="Location name"
+        required
+        placeholder="e.g. Main Gate"
+        value={values.locationName}
+        onChange={(locationName) => set({ locationName })}
+        error={errors.locationName}
+        leading={<MapPin />}
+      />
+
+      <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-start">
+        <TextField
+          label="Latitude"
+          required
+          inputMode="decimal"
+          placeholder="18.6215"
+          value={values.latitude}
+          onChange={(latitude) => set({ latitude })}
+          error={errors.latitude}
+        />
+        <TextField
+          label="Longitude"
+          required
+          inputMode="decimal"
+          placeholder="73.9108"
+          value={values.longitude}
+          onChange={(longitude) => set({ longitude })}
+          error={errors.longitude}
+        />
+        <Button
+          onClick={useMyLocation}
+          state={geo.status === 'locating' ? 'loading' : 'idle'}
+          className="sm:mt-[26px]"
+        >
+          <Locate />
+          Use my location
+        </Button>
+      </div>
+
+      {errors.coordinates && (
+        <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
+          <CircleAlert className="mt-0.5 shrink-0" />
+          {errors.coordinates}
+        </p>
+      )}
+      {offCampus && (
+        <p role="alert" className="flex items-start gap-2 text-sm text-amber-300">
+          <TriangleAlert className="mt-0.5 shrink-0" />
+          You seem to be outside the campus, so your location wasn’t used. Pick the place from the list instead.
+        </p>
+      )}
+      {geo.status === 'success' && !offCampus && (
+        <Badge tone="positive" icon={<Check />} className="self-start">
+          Location captured, accurate to about {geo.coords.accuracy} m
+        </Badge>
+      )}
+      {geo.status === 'error' && (
+        <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
+          <CircleAlert className="mt-0.5 shrink-0" />
+          {geo.error}
+        </p>
+      )}
+    </fieldset>
+  );
+}
