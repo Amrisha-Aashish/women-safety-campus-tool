@@ -3,6 +3,20 @@
 // (23.3441, 85.3096). Replace them with the real campus before launch.
 export const CAMPUS_CENTER = { latitude: 23.3441, longitude: 85.3096 };
 
+/**
+ * Campus boundary as [latitude, longitude] corners, in order. Reports must be
+ * inside it, and the map shows only this area. Keep it identical to
+ * backend/src/config/campus.js. Replace with the real campus outline.
+ */
+export const CAMPUS_BOUNDARY = [
+  [23.3484, 85.3058],
+  [23.3484, 85.3128],
+  [23.3466, 85.3142],
+  [23.3416, 85.3142],
+  [23.3402, 85.3124],
+  [23.3402, 85.3058],
+];
+
 export const CAMPUS_PLACES = [
   { id: 'main-gate', name: 'Main Gate', latitude: 23.3412, longitude: 85.3071 },
   { id: 'east-gate', name: 'East Gate Walkway', latitude: 23.3441, longitude: 85.3131 },
