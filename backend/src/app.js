@@ -8,6 +8,7 @@ import sosAlertsRouter from './routes/sos-alerts.routes.js';
 import dashboardRouter from './routes/dashboard.routes.js';
 import { notFound, errorHandler } from './middleware/error.middleware.js';
 
+
 const app = express();
 
 app.use(helmet());
