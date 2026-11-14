@@ -18,11 +18,11 @@ export default function PageToolbar({ children, actions }) {
   const onSos = pathname.startsWith('/sos');
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-3">
+    <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-4">
       <MobileNav />
       <div className="mr-auto min-w-0">
-        <h1 className="truncate text-xl leading-tight font-extrabold tracking-tight sm:text-2xl">{page?.title ?? 'SafeCampus'}</h1>
-        {page?.description && <p className="mt-0.5 hidden truncate text-sm text-neutral-400 sm:block">{page.description}</p>}
+        <h1 className="truncate text-2xl leading-tight font-extrabold tracking-tight sm:text-4xl">{page?.title ?? 'SafeCampus'}</h1>
+        {page?.description && <p className="mt-1.5 hidden truncate text-base text-neutral-400 sm:block">{page.description}</p>}
       </div>
       <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
         {children}
