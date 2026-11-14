@@ -1,9 +1,9 @@
+import { Check, CircleAlert, Locate, MapPin, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
 import { Badge, Button, Select, TextField } from 'glassform';
 import { CAMPUS_PLACES } from '../../data/campusPlaces.js';
 import { useGeolocation } from '../../hooks/useGeolocation.js';
 import { isOnCampus } from '../../lib/campusGeo.js';
-import Icon from '../Icon.jsx';
 
 const PLACE_OPTIONS = [
   ...CAMPUS_PLACES.map((p) => ({ value: p.id, label: p.name })),
@@ -59,7 +59,7 @@ export default function LocationFields({ values, set, errors }) {
         value={values.locationName}
         onChange={(locationName) => set({ locationName })}
         error={errors.locationName}
-        leading={<Icon name="map-pin" />}
+        leading={<MapPin />}
       />
 
       <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-start">
@@ -86,31 +86,31 @@ export default function LocationFields({ values, set, errors }) {
           state={geo.status === 'locating' ? 'loading' : 'idle'}
           className="sm:mt-[26px]"
         >
-          <Icon name="locate" />
+          <Locate />
           Use my location
         </Button>
       </div>
 
       {errors.coordinates && (
         <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
-          <Icon name="alert-circle" className="mt-0.5 shrink-0" />
+          <CircleAlert className="mt-0.5 shrink-0" />
           {errors.coordinates}
         </p>
       )}
       {offCampus && (
         <p role="alert" className="flex items-start gap-2 text-sm text-amber-300">
-          <Icon name="alert-triangle" className="mt-0.5 shrink-0" />
+          <TriangleAlert className="mt-0.5 shrink-0" />
           You seem to be outside the campus, so your location wasn’t used. Pick the place from the list instead.
         </p>
       )}
       {geo.status === 'success' && !offCampus && (
-        <Badge tone="positive" icon={<Icon name="check" />} className="self-start">
+        <Badge tone="positive" icon={<Check />} className="self-start">
           Location captured, accurate to about {geo.coords.accuracy} m
         </Badge>
       )}
       {geo.status === 'error' && (
         <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
-          <Icon name="alert-circle" className="mt-0.5 shrink-0" />
+          <CircleAlert className="mt-0.5 shrink-0" />
           {geo.error}
         </p>
       )}

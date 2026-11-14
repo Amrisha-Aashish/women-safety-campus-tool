@@ -1,7 +1,7 @@
 import { Card, GlassSegmented, toast } from 'glassform';
+import { ShieldCheck } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import DataSourceBar from '../components/app/DataSourceBar.jsx';
-import Icon from '../components/Icon.jsx';
 import SosAlertCard from '../components/sos-alerts/SosAlertCard.jsx';
 import SosAlertSummary from '../components/sos-alerts/SosAlertSummary.jsx';
 import { getSosStatus, SOS_STATUSES } from '../data/sosStatus.js';
@@ -92,7 +92,7 @@ export default function SosAlerts() {
         </div>
       ) : (
         <Card radius={22} className="grid place-items-center gap-2 py-14 text-center">
-          <Icon name="shield-check" size={32} className="text-emerald-300" />
+          <ShieldCheck size={32} className="text-emerald-300" />
           <p className="font-semibold">
             {filter === 'ALL' ? 'No SOS alerts yet' : `No ${getSosStatus(filter).label.toLowerCase()} alerts`}
           </p>

@@ -1,6 +1,5 @@
 import { Select } from 'glassform';
 import { CATEGORIES } from '../../data/categories.js';
-import Icon from '../Icon.jsx';
 
 const OPTIONS = CATEGORIES.map((c) => ({
   value: c.value,
@@ -8,7 +7,7 @@ const OPTIONS = CATEGORIES.map((c) => ({
   description: c.hint,
   icon: (
     <span className="grid size-7 place-items-center rounded-lg" style={{ background: `color-mix(in srgb, ${c.color} 18%, transparent)`, color: c.color }}>
-      <Icon name={c.icon} size={16} />
+      <c.icon size={16} />
     </span>
   ),
 }));

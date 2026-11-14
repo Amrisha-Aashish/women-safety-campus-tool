@@ -1,7 +1,7 @@
 import { Badge, GlassSurface } from 'glassform';
+import { Clock, MapPin, X } from 'lucide-react';
 import { getCategory } from '../../data/categories.js';
 import { formatDateTime } from '../../lib/format.js';
-import Icon from '../Icon.jsx';
 
 /**
  * Glass card over the map with the report that was clicked.
@@ -21,16 +21,16 @@ export default function ReportDetail({ report, onClose }) {
           aria-label="Close report"
           className="-m-1 grid size-7 cursor-pointer place-items-center rounded-full text-neutral-400 hover:bg-white/10 hover:text-white"
         >
-          <Icon name="x" size={16} />
+          <X size={16} />
         </button>
       </div>
       <p className="mt-3 text-sm leading-relaxed text-neutral-100">{report.description}</p>
       <p className="mt-3 flex items-center gap-1.5 text-xs text-neutral-400">
-        <Icon name="map-pin" />
+        <MapPin />
         {report.location?.name ?? 'Unknown place'}
       </p>
       <p className="mt-1 flex items-center gap-1.5 text-xs text-neutral-400">
-        <Icon name="clock" />
+        <Clock />
         {formatDateTime(report.occurredAt ?? report.createdAt)}
       </p>
       <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/10 pt-3 text-xs">

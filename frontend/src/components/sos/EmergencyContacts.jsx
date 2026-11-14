@@ -1,6 +1,6 @@
 import { Badge, Button, Card, List } from 'glassform';
+import { Phone } from 'lucide-react';
 import { EMERGENCY_CONTACTS } from '../../data/emergencyContacts.js';
-import Icon from '../Icon.jsx';
 
 /** Tap-to-call emergency numbers. */
 export default function EmergencyContacts() {
@@ -8,7 +8,7 @@ export default function EmergencyContacts() {
     id: c.id,
     leading: (
       <span className="grid size-9 place-items-center rounded-xl bg-red-500/10 text-red-300">
-        <Icon name="phone" size={18} />
+        <Phone size={18} />
       </span>
     ),
     title: c.name,

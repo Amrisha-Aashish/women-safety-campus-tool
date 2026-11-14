@@ -1,10 +1,10 @@
 import { StatCard } from 'glassform';
+import { Activity, CircleCheck, Clock, Siren } from 'lucide-react';
 import { formatDuration } from '../../lib/format.js';
-import Icon from '../Icon.jsx';
 
-const iconTile = (name, className) => (
+const iconTile = (TileIcon, className) => (
   <span className={`grid size-9 place-items-center rounded-xl ${className}`}>
-    <Icon name={name} size={18} />
+    <TileIcon size={18} />
   </span>
 );
 
@@ -25,7 +25,7 @@ export default function SosAlertSummary({ summary, loading }) {
         label="Active"
         value={summary.ACTIVE}
         animate
-        icon={iconTile('siren', 'bg-red-500/15 text-red-300')}
+        icon={iconTile(Siren, 'bg-red-500/15 text-red-300')}
         deltaLabel="Waiting for a response"
       />
       <StatCard
@@ -35,7 +35,7 @@ export default function SosAlertSummary({ summary, loading }) {
         label="Acknowledged"
         value={summary.ACKNOWLEDGED}
         animate
-        icon={iconTile('clock', 'bg-amber-500/15 text-amber-300')}
+        icon={iconTile(Clock, 'bg-amber-500/15 text-amber-300')}
         deltaLabel="Security on the way"
       />
       <StatCard
@@ -45,7 +45,7 @@ export default function SosAlertSummary({ summary, loading }) {
         label="Resolved"
         value={summary.RESOLVED}
         animate
-        icon={iconTile('check-circle', 'bg-emerald-500/15 text-emerald-300')}
+        icon={iconTile(CircleCheck, 'bg-emerald-500/15 text-emerald-300')}
         deltaLabel={`of ${summary.total} alerts`}
       />
       <StatCard
@@ -54,7 +54,7 @@ export default function SosAlertSummary({ summary, loading }) {
         loading={loading}
         label="Avg. time to resolve"
         value={summary.avgResolveMs == null ? '—' : formatDuration(summary.avgResolveMs)}
-        icon={iconTile('activity', 'bg-brand-500/15 text-brand-300')}
+        icon={iconTile(Activity, 'bg-brand-500/15 text-brand-300')}
         deltaLabel="From alert to resolved"
       />
     </div>

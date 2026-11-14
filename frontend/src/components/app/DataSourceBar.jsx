@@ -1,6 +1,6 @@
 import { GlassBadge, GlassButton, GlassSegmented } from 'glassform';
+import { RefreshCw } from 'lucide-react';
 import { formatTime } from '../../lib/format.js';
-import Icon from '../Icon.jsx';
 import PageToolbar from '../layout/PageToolbar.jsx';
 
 const SOURCES = [
@@ -26,7 +26,7 @@ export default function DataSourceBar({ source, onSourceChange, status, updatedA
           title={updatedAt ? `Updated ${formatTime(updatedAt)}` : refreshLabel}
           className="w-9 px-0"
         >
-          <Icon name="refresh" />
+          <RefreshCw />
         </GlassButton>
       }
     >

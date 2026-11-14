@@ -1,4 +1,6 @@
-// Copy for the landing page sections. `icon` is an <Icon> name.
+// Copy for the landing page sections. `icon` is a lucide-react icon component.
+import { Bell, ChartColumn, EyeOff, Funnel, LayoutDashboard, Map as MapIcon, Route, User } from 'lucide-react';
+
 export const STEPS = [
   {
     title: 'Report',
@@ -15,12 +17,12 @@ export const STEPS = [
 ];
 
 export const FEATURES = [
-  { icon: 'eye-off', title: 'Anonymous reporting', text: 'Report without revealing who you are. Your name never reaches the dashboard.' },
-  { icon: 'user', title: 'Named reporting', text: 'Choose to share your identity when you want follow-up from the safety team.' },
-  { icon: 'filter', title: 'Clear categories', text: 'Harassment, stalking, unsafe areas, emergencies and other concerns.' },
-  { icon: 'dashboard', title: 'Live admin dashboard', text: 'Totals, open vs resolved, categories and the latest reports, refreshed automatically.' },
-  { icon: 'map', title: 'Campus safety map', text: 'Every report and risk zone on a real map, filterable by category.' },
-  { icon: 'chart', title: 'Risk analytics', text: 'Find the riskiest places and hours so preventive action goes where it matters.' },
-  { icon: 'bell', title: 'SOS alerts', text: 'One large button, a confirmation step and your location sent with the alert.' },
-  { icon: 'route', title: 'Safe routes', text: 'Route guidance and walking companions around black spots.', soon: true },
+  { icon: EyeOff, title: 'Anonymous reporting', text: 'Report without revealing who you are. Your name never reaches the dashboard.' },
+  { icon: User, title: 'Named reporting', text: 'Choose to share your identity when you want follow-up from the safety team.' },
+  { icon: Funnel, title: 'Clear categories', text: 'Harassment, stalking, unsafe areas, emergencies and other concerns.' },
+  { icon: LayoutDashboard, title: 'Live admin dashboard', text: 'Totals, open vs resolved, categories and the latest reports, refreshed automatically.' },
+  { icon: MapIcon, title: 'Campus safety map', text: 'Every report and risk zone on a real map, filterable by category.' },
+  { icon: ChartColumn, title: 'Risk analytics', text: 'Find the riskiest places and hours so preventive action goes where it matters.' },
+  { icon: Bell, title: 'SOS alerts', text: 'One large button, a confirmation step and your location sent with the alert.' },
+  { icon: Route, title: 'Safe routes', text: 'Route guidance and walking companions around black spots.', soon: true },
 ];

@@ -1,5 +1,5 @@
 import { Card, GlassButton, TextField, toast } from 'glassform';
-import Icon from '../Icon.jsx';
+import { CircleAlert, Send } from 'lucide-react';
 import AnonymousToggle from './AnonymousToggle.jsx';
 import CategoryField from './CategoryField.jsx';
 import LocationFields from './LocationFields.jsx';
@@ -49,7 +49,7 @@ export default function ReportForm({ form }) {
 
         {form.serverError && (
           <div role="alert" className="flex items-start gap-3 rounded-2xl bg-red-500/10 p-4 text-sm text-red-200 ring-1 ring-red-500/30">
-            <Icon name="alert-circle" size={18} className="mt-0.5 shrink-0" />
+            <CircleAlert size={18} className="mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold">Your report wasn't sent</p>
               <p className="mt-0.5">{form.serverError} Your answers are still here, so you can try again.</p>
@@ -65,7 +65,7 @@ export default function ReportForm({ form }) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs text-neutral-400">Fields marked * are required.</p>
           <GlassButton type="submit" prominent size="lg" state={form.status === 'sending' ? 'loading' : 'idle'}>
-            <Icon name="send" />
+            <Send />
             Submit report
           </GlassButton>
         </div>

@@ -1,5 +1,5 @@
 import { Button, GlassButton, GlassModal } from 'glassform';
-import Icon from '../Icon.jsx';
+import { Siren } from 'lucide-react';
 
 /**
  * Confirmation step before an SOS is sent, so a stray tap doesn't raise an alarm.
@@ -22,7 +22,7 @@ export default function SosConfirmDialog({ open, onOpenChange, onConfirm, sendin
             Cancel
           </Button>
           <GlassButton tint="rgb(220 38 38 / 0.92)" className="text-white" onClick={onConfirm} state={sending ? 'loading' : 'idle'}>
-            <Icon name="siren" />
+            <Siren />
             Send SOS now
           </GlassButton>
         </>

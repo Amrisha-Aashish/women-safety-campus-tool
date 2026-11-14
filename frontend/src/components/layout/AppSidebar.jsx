@@ -1,7 +1,7 @@
 import { GlassSidebar } from 'glassform';
+import { House } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 import { APP_NAV, isActivePath } from '../../data/navigation.js';
-import Icon from '../Icon.jsx';
 import Logo from '../Logo.jsx';
 import ApiStatus from './ApiStatus.jsx';
 
@@ -22,7 +22,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
     value: item.to,
     href: item.to,
     label: item.label,
-    icon: <Icon name={item.icon} />,
+    icon: <item.icon />,
     active: isActivePath(pathname, item.to),
     onClick: onNavigate,
     ...(item.danger && {
@@ -47,7 +47,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
           <div className="space-y-3 px-1">
             <ApiStatus />
             <Link to="/" onClick={onNavigate} className="flex items-center gap-2 text-sm text-neutral-50/60 no-underline hover:text-neutral-50">
-              <Icon name="home" />
+              <House />
               Back to home
             </Link>
           </div>
