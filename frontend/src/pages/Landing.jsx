@@ -1,0 +1,25 @@
+import Features from '../components/landing/Features.jsx';
+import Hero from '../components/landing/Hero.jsx';
+import HowItWorks from '../components/landing/HowItWorks.jsx';
+import PrivacyBand from '../components/landing/PrivacyBand.jsx';
+import QuickActions from '../components/landing/QuickActions.jsx';
+import SiteFooter from '../components/landing/SiteFooter.jsx';
+import SiteHeader from '../components/landing/SiteHeader.jsx';
+
+/** Public home page: what SafeCampus is, and quick ways in. */
+export default function Landing() {
+  return (
+    <div className="min-h-dvh bg-canvas">
+      <SiteHeader />
+      <main>
+        <Hero>
+          <QuickActions />
+        </Hero>
+        <HowItWorks />
+        <Features />
+        <PrivacyBand />
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
