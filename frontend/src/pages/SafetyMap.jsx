@@ -4,9 +4,11 @@ import DataSourceBar from '../components/app/DataSourceBar.jsx';
 import CampusMap from '../components/map/CampusMap.jsx';
 import CategoryFilter from '../components/map/CategoryFilter.jsx';
 import MapLegend from '../components/map/MapLegend.jsx';
+import ReportDetail from '../components/map/ReportDetail.jsx';
 import SpotList from '../components/map/SpotList.jsx';
 import { CATEGORIES } from '../data/categories.js';
 import { useReports } from '../hooks/useReports.js';
+import { isOnCampus } from '../lib/campusGeo.js';
 import { hotspots } from '../lib/reportStats.js';
 
 const LAYERS = [
@@ -17,18 +19,29 @@ const LAYERS = [
 
 /**
  * Safety map: reported incidents and risk zones ("black spots") on the campus.
+ * Only the campus is shown, so reports outside its boundary are left out.
  * Risk zones are computed in the browser for now; the analytics service will supply them later.
  */
 export default function SafetyMap() {
   const [source, setSource] = useState('live');
   const [layer, setLayer] = useState('all');
   const [categories, setCategories] = useState(() => new Set(CATEGORIES.map((c) => c.value)));
-  const [selected, setSelected] = useState(null);
+  const [selectedSpot, setSelectedSpot] = useState(null);
+  const [selectedReport, setSelectedReport] = useState(null);
   const { reports, status, updatedAt, refresh } = useReports({ source });
 
-  const visible = useMemo(() => reports.filter((r) => categories.has(r.category)), [reports, categories]);
+  const onCampus = useMemo(() => reports.filter((r) => isOnCampus(r.location?.latitude, r.location?.longitude)), [reports]);
+  const visible = useMemo(() => onCampus.filter((r) => categories.has(r.category)), [onCampus, categories]);
   const spots = useMemo(() => hotspots(visible), [visible]);
-  const counts = useMemo(() => Object.fromEntries(CATEGORIES.map((c) => [c.value, reports.filter((r) => r.category === c.value).length])), [reports]);
+  const counts = useMemo(() => Object.fromEntries(CATEGORIES.map((c) => [c.value, onCampus.filter((r) => r.category === c.value).length])), [onCampus]);
+  const report = visible.find((r) => r.id === selectedReport);
+
+  const selectSpot = (name) => {
+    setSelectedSpot((current) => (current === name ? null : name));
+    setSelectedReport(null);
+    if (layer === 'reports') setLayer('all');
+  };
+  const selectReport = (id) => setSelectedReport((current) => (current === id ? null : id));
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-5">
@@ -36,32 +49,40 @@ export default function SafetyMap() {
 
       <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
         <Card radius={24} padding="none" className="relative overflow-hidden">
-          <CampusMap
-            reports={visible}
-            spots={spots}
-            showReports={layer !== 'zones'}
-            showZones={layer !== 'reports'}
-            selected={selected}
-            onSelect={setSelected}
-            className="z-0 h-[480px] w-full sm:h-[560px] lg:h-[calc(100dvh-200px)] lg:min-h-[560px]"
-          />
-          {/* Glass controls float over the map (Leaflet panes use z-index up to 1000). */}
-          <div className="pointer-events-none absolute inset-x-3 top-3 z-[1000] flex flex-wrap items-start justify-between gap-2">
+          <div className="relative h-[440px] w-full bg-[#0e1120] sm:h-[600px] lg:h-[calc(100dvh-250px)] lg:min-h-[600px]">
+            <CampusMap
+              reports={visible}
+              spots={spots}
+              showReports={layer !== 'zones'}
+              showZones={layer !== 'reports'}
+              selectedSpot={selectedSpot}
+              onSelectSpot={selectSpot}
+              selectedReport={selectedReport}
+              onSelectReport={selectReport}
+              className="absolute inset-0 size-full p-2 pt-16 sm:p-3 sm:pt-16"
+            />
+          </div>
+
+          {/* Glass controls float over the map. */}
+          <div className="pointer-events-none absolute inset-x-3 top-3 flex flex-wrap items-start justify-between gap-2">
             <div className="pointer-events-auto">
               <GlassSegmented options={LAYERS} value={layer} onChange={setLayer} aria-label="Map layers" />
             </div>
-            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-white/10 shadow-sm backdrop-blur">
+            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-white/10">
               {visible.length} reports · {spots.length} places
             </p>
           </div>
-          <div className="pointer-events-none absolute bottom-3 left-3 z-[1000] hidden sm:block">
-            <MapLegend />
-          </div>
+          {report && (
+            <div className="pointer-events-none absolute inset-x-3 bottom-14 flex justify-end sm:bottom-16">
+              <ReportDetail report={report} onClose={() => setSelectedReport(null)} />
+            </div>
+          )}
+          <MapLegend />
         </Card>
 
         <div className="flex flex-col gap-5">
           <CategoryFilter selected={categories} onChange={setCategories} counts={counts} />
-          <SpotList spots={spots} selected={selected} onSelect={setSelected} />
+          <SpotList spots={spots} selected={selectedSpot} onSelect={selectSpot} />
         </div>
       </div>
     </div>

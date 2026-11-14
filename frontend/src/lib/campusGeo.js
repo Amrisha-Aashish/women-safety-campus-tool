@@ -32,7 +32,7 @@ const M_PER_DEG_LNG = 111320 * COS;
 
 const WIDTH_M = (MAX_LNG - MIN_LNG) * M_PER_DEG_LNG;
 const HEIGHT_M = (MAX_LAT - MIN_LAT) * M_PER_DEG_LAT;
-const PAD = 60;
+const PAD = 40;
 
 /** SVG units per metre. */
 export const UNITS_PER_M = 1000 / WIDTH_M;
