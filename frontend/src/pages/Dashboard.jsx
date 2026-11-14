@@ -22,11 +22,11 @@ export default function Dashboard() {
     <div className="mx-auto flex max-w-7xl flex-col gap-5">
       <DataSourceBar source={source} onSourceChange={setSource} status={status} updatedAt={updatedAt} onRefresh={refresh} />
       <StatsRow summary={summary} loading={status === 'loading'} />
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <CategoryCard categories={categories} open={summary.open} resolved={summary.resolved} />
         <TimeZonesCard hours={hours} bands={bands} />
       </div>
-      <div className="grid gap-5 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <RecentReportsTable reports={reports} loading={status === 'loading'} />
         <BlackSpotsCard spots={spots} />
       </div>
