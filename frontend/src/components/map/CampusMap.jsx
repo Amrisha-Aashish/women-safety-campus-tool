@@ -79,7 +79,7 @@ export default function CampusMap({
             preserveAspectRatio="none"
           />
         ))}
-        <rect x={x} y={y} width={width} height={height} fill="#0a0c16" opacity="0.12" />
+        <rect x={x} y={y} width={width} height={height} fill="#0a0a0a" opacity="0.12" />
       </g>
       <path d={BOUNDARY_PATH} fill="none" stroke="rgb(255 255 255 / 0.7)" strokeWidth="2.5" strokeLinejoin="round" />
 
@@ -128,14 +128,14 @@ export default function CampusMap({
           const p = project(place.latitude, place.longitude);
           return (
             <g key={place.id}>
-              <circle cx={p.x} cy={p.y} r="5" fill="#fff" stroke="#0a0c16" strokeWidth="2" />
+              <circle cx={p.x} cy={p.y} r="5" fill="#fff" stroke="#0a0a0a" strokeWidth="2" />
               <text
                 x={p.x}
                 y={p.y + 32}
                 textAnchor="middle"
                 fontSize="21"
                 fontWeight="500"
-                fill="#0f172a"
+                fill="#171717"
                 stroke="#fff"
                 strokeOpacity="0.85"
                 strokeWidth="6"
@@ -164,7 +164,7 @@ export default function CampusMap({
               cy={p.y}
               r={selected ? 13 : 9}
               fill={category.color}
-              stroke={selected ? '#fff' : '#0a0c16'}
+              stroke={selected ? '#fff' : '#0a0a0a'}
               strokeWidth={selected ? 4 : 3}
               role="button"
               tabIndex={0}
@@ -179,13 +179,13 @@ export default function CampusMap({
           );
         })}
 
-      <text x={x + 8} y={height + y - 10} fontSize="15" fill="#94a3b8">
+      <text x={x + 8} y={height + y - 10} fontSize="15" fill="#a3a3a3">
         {STREET_TILES.attribution}
       </text>
 
       {/* North arrow and scale */}
-      <g aria-hidden="true" fill="#cbd5e1" fontSize="20" fontWeight="600">
-        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} fill="#cbd5e1" />
+      <g aria-hidden="true" fill="#d4d4d4" fontSize="20" fontWeight="600">
+        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} fill="#d4d4d4" />
         <text x={width + x - 26} y={y + 66} textAnchor="middle">
           N
         </text>
@@ -194,7 +194,7 @@ export default function CampusMap({
           x2={width + x - 30}
           y1={height + y - 26}
           y2={height + y - 26}
-          stroke="#cbd5e1"
+          stroke="#d4d4d4"
           strokeWidth="2"
         />
         <text x={width + x - 30 - (SCALE_M * UNITS_PER_M) / 2} y={height + y - 34} textAnchor="middle">

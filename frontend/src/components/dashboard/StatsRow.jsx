@@ -56,7 +56,7 @@ export default function StatsRow({ summary, loading }) {
         value={anonymousShare}
         suffix="%"
         animate
-        icon={iconTile('eye-off', 'bg-sky-500/15 text-sky-300')}
+        icon={iconTile('eye-off', 'bg-fuchsia-500/15 text-fuchsia-300')}
         deltaLabel="Shown with a pseudonym"
       />
     </div>

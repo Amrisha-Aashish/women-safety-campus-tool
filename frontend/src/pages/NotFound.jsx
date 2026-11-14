@@ -12,7 +12,7 @@ export default function NotFound() {
         <Logo />
         <p className="mt-12 font-display text-7xl font-extrabold text-brand-300">404</p>
         <h1 className="mt-3 text-2xl font-bold">This page doesn’t exist</h1>
-        <p className="mt-2 max-w-sm text-slate-400">The link may be old or mistyped. These will get you back on track.</p>
+        <p className="mt-2 max-w-sm text-neutral-400">The link may be old or mistyped. These will get you back on track.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <GlassButton as={Link} to="/" prominent>
             <Icon name="home" />

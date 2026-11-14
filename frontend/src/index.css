@@ -18,14 +18,14 @@
   --color-brand-800: #4621b0;
   --color-brand-900: #3a1d8e;
 
-  /* Ink: the deep navy of the sidebar and dark sections. */
-  --color-ink-950: #090b17;
-  --color-ink-900: #0d1020;
-  --color-ink-800: #151a33;
-  --color-ink-700: #222846;
+  /* Ink: neutral near-blacks for the sidebar and dark sections. */
+  --color-ink-950: #080808;
+  --color-ink-900: #111111;
+  --color-ink-800: #1a1a1a;
+  --color-ink-700: #262626;
 
   /* App canvas: the solid background of every page. */
-  --color-canvas: #0a0c16;
+  --color-canvas: #0a0a0a;
 
   --animate-sos-ring: sos-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
   --animate-fade-up: fade-up 0.4s ease-out both;
@@ -47,13 +47,13 @@
 .dark {
   --lg-accent: #7c5cff;
   --lg-on-accent: #fff;
-  --lg-text: #e8eaf2;
+  --lg-text: #ededed;
   --lg-positive: #34d399;
   --lg-negative: #f87171;
   --lg-warning: #fbbf24;
   --lg-info: #38bdf8;
   --lg-switch-on: #7c5cff;
-  --lg-solid: #121626;
+  --lg-solid: #161616;
   --lg-solid-border: rgb(255 255 255 / 0.07);
 }
 
@@ -76,7 +76,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-canvas font-sans text-slate-100;
+    @apply bg-canvas font-sans text-neutral-100;
     color-scheme: dark;
   }
   h1, h2, h3, h4 {

@@ -16,7 +16,7 @@ export default function ReportResult({ report, onReset }) {
           <Icon name="check" size={32} strokeWidth={2.6} />
         </span>
         <h2 className="mt-5 text-2xl font-extrabold">Report submitted</h2>
-        <p className="mt-2 max-w-md text-slate-300">
+        <p className="mt-2 max-w-md text-neutral-300">
           Thank you for speaking up. Your report is now on the safety dashboard and helps find unsafe places before
           someone else gets hurt.
         </p>
