@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  SECURITY
+  VOLUNTEER
+}
+
+enum ReportCategory {
+  HARASSMENT
+  STALKING
+  UNSAFE_AREA
+  EMERGENCY
+  OTHER
+}
+
+enum ReportStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AlertStatus {
+  DRAFT
+  ACTIVE
+  EXPIRED
+  RESOLVED
+}
+
+enum SOSStatus {
+  ACTIVE
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String?
+  email     String?    @unique
+  role      UserRole   @default(STUDENT)
+  pseudonym String?    @unique
+  createdAt DateTime   @default(now())
+  reports   Report[]
+  sosAlerts SOSAlert[]
+}
+
+model Report {
+  id                String         @id @default(cuid())
+  category          ReportCategory
+  description       String         @db.VarChar(2000)
+  latitude          Float
+  longitude         Float
+  locationName      String         @db.VarChar(200)
+  isAnonymous       Boolean        @default(true)
+  reporterPseudonym String?        @db.VarChar(80)
+  status            ReportStatus   @default(OPEN)
+  occurredAt        DateTime       @default(now())
+  createdAt         DateTime       @default(now())
+  userId            String?
+  user              User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([latitude, longitude])
+  @@index([occurredAt])
+  @@index([status, createdAt])
+}
+
+model RiskZone {
+  id        String    @id @default(cuid())
+  zoneName  String    @db.VarChar(200)
+  latitude  Float
+  longitude Float
+  riskScore Float
+  riskLevel RiskLevel
+  reason    String    @db.Text
+  updatedAt DateTime  @updatedAt
+
+  @@index([latitude, longitude])
+  @@index([riskLevel, updatedAt])
+}
+
+model Alert {
+  id        String        @id @default(cuid())
+  title     String        @db.VarChar(200)
+  message   String        @db.Text
+  severity  AlertSeverity @default(MEDIUM)
+  status    AlertStatus   @default(ACTIVE)
+  createdAt DateTime      @default(now())
+
+  @@index([status, createdAt])
+}
+
+model SOSAlert {
+  id         String    @id @default(cuid())
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  latitude   Float
+  longitude  Float
+  status     SOSStatus @default(ACTIVE)
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+
+  @@index([status, createdAt])
+  @@index([latitude, longitude])
+}
