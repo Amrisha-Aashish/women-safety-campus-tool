@@ -24,8 +24,8 @@
   --color-ink-800: #151a33;
   --color-ink-700: #222846;
 
-  /* App canvas behind cards. */
-  --color-canvas: #f4f5fa;
+  /* App canvas: the solid background of every page. */
+  --color-canvas: #0a0c16;
 
   --animate-sos-ring: sos-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
   --animate-fade-up: fade-up 0.4s ease-out both;
@@ -40,25 +40,21 @@
   }
 }
 
-/* glassform theme: brand accent, SafeCampus status colours, slate text. */
-:root {
-  --lg-accent: #6338ee;
-  --lg-on-accent: #fff;
-  --lg-text: #0f172a;
-  --lg-positive: #059669;
-  --lg-negative: #dc2626;
-  --lg-warning: #d97706;
-  --lg-info: #0284c7;
-  --lg-switch-on: #6338ee;
-  --lg-solid: #fff;
-  --lg-solid-border: rgb(15 23 42 / 0.08);
-}
-
-/* Dark islands (landing hero, sidebar) use glassform's `.dark` tokens. */
+/* glassform theme (dark): brand accent, status colours bright enough for a
+   dark page, and solid surfaces a step lighter than the canvas. The selector
+   matches glassform's own dark rule so these win (this file loads after it). */
+:root[data-theme='dark'],
 .dark {
-  --lg-text: #f5f5f7;
-  --lg-accent: #8b74ff;
-  --lg-solid: #151a33;
+  --lg-accent: #7c5cff;
+  --lg-on-accent: #fff;
+  --lg-text: #e8eaf2;
+  --lg-positive: #34d399;
+  --lg-negative: #f87171;
+  --lg-warning: #fbbf24;
+  --lg-info: #38bdf8;
+  --lg-switch-on: #7c5cff;
+  --lg-solid: #121626;
+  --lg-solid-border: rgb(255 255 255 / 0.07);
 }
 
 @layer base {
@@ -67,13 +63,14 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-canvas font-sans text-slate-900;
+    @apply bg-canvas font-sans text-slate-100;
+    color-scheme: dark;
   }
   h1, h2, h3, h4 {
     @apply font-display;
   }
   ::selection {
-    @apply bg-brand-200 text-brand-900;
+    @apply bg-brand-500/40 text-white;
   }
 }
 
@@ -85,26 +82,38 @@
   }
 }
 
-/* Leaflet popups and controls restyled to match the app. */
+/* Leaflet: dark map tiles (the markers keep their real colours) and dark popups. */
 .leaflet-container {
   font-family: var(--font-sans);
-  background: #eef0f5;
+  background: #0e1120;
+}
+.leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) saturate(0.6);
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #121626;
+  color: #e8eaf2;
+  box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.6);
 }
 .leaflet-popup-content-wrapper {
   border-radius: 16px;
-  box-shadow: 0 12px 32px -12px rgb(16 24 40 / 0.3);
+  border: 1px solid rgb(255 255 255 / 0.08);
 }
 .leaflet-popup-content {
   margin: 12px 14px;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: #94a3b8;
 }
 .sc-popup p {
   margin: 4px 0 6px;
   font-size: 13px;
   line-height: 1.45;
-  color: #0f172a;
+  color: #e8eaf2;
 }
 .sc-popup small {
-  color: #64748b;
+  color: #94a3b8;
 }
 .sc-popup-tag {
   font-size: 11px;
@@ -116,5 +125,20 @@
   border: 0 !important;
   border-radius: 14px !important;
   overflow: hidden;
-  box-shadow: 0 6px 20px -8px rgb(16 24 40 / 0.35) !important;
+  box-shadow: 0 6px 20px -8px rgb(0 0 0 / 0.6) !important;
+}
+.leaflet-bar a {
+  background: #121626;
+  color: #e8eaf2;
+  border-bottom-color: rgb(255 255 255 / 0.08);
+}
+.leaflet-bar a:hover {
+  background: #1a1f35;
+}
+.leaflet-container .leaflet-control-attribution {
+  background: rgb(10 12 22 / 0.75);
+  color: #94a3b8;
+}
+.leaflet-control-attribution a {
+  color: #b6abff;
 }

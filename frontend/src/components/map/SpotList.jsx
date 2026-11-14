@@ -27,7 +27,7 @@ export default function SpotList({ spots, selected, onSelect }) {
         showChevron={false}
         className="-mx-2"
         classNames={{ subtitle: 'whitespace-normal overflow-visible' }}
-        empty={<p className="py-4 text-center text-sm text-slate-500">No reports match the filters.</p>}
+        empty={<p className="py-4 text-center text-sm text-slate-400">No reports match the filters.</p>}
       />
     </Card>
   );

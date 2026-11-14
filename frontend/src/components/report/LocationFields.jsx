@@ -92,7 +92,7 @@ export default function LocationFields({ values, set, errors }) {
         </Badge>
       )}
       {geo.status === 'error' && (
-        <p role="alert" className="flex items-start gap-2 text-sm text-red-700">
+        <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
           <Icon name="alert-circle" className="mt-0.5 shrink-0" />
           {geo.error}
         </p>

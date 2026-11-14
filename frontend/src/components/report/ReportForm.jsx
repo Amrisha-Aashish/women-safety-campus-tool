@@ -41,14 +41,14 @@ export default function ReportForm({ form }) {
           />
         </fieldset>
 
-        <hr className="border-slate-100" />
+        <hr className="border-white/10" />
         <LocationFields values={values} set={set} errors={errors} />
 
-        <hr className="border-slate-100" />
+        <hr className="border-white/10" />
         <AnonymousToggle checked={values.isAnonymous} onChange={(isAnonymous) => set({ isAnonymous })} />
 
         {form.serverError && (
-          <div role="alert" className="flex items-start gap-3 rounded-2xl bg-red-50 p-4 text-sm text-red-800 ring-1 ring-red-200">
+          <div role="alert" className="flex items-start gap-3 rounded-2xl bg-red-500/10 p-4 text-sm text-red-200 ring-1 ring-red-500/30">
             <Icon name="alert-circle" size={18} className="mt-0.5 shrink-0" />
             <div>
               <p className="font-semibold">Your report wasn't sent</p>
@@ -57,13 +57,13 @@ export default function ReportForm({ form }) {
           </div>
         )}
         {Object.keys(errors).length > 0 && (
-          <p role="alert" className="text-sm font-medium text-red-700">
+          <p role="alert" className="text-sm font-medium text-red-300">
             Please fix the highlighted fields.
           </p>
         )}
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">Fields marked * are required.</p>
+          <p className="text-xs text-slate-400">Fields marked * are required.</p>
           <GlassButton type="submit" prominent size="lg" state={form.status === 'sending' ? 'loading' : 'idle'}>
             <Icon name="send" />
             Submit report

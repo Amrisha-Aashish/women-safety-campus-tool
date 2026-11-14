@@ -24,7 +24,7 @@ export default function StatsRow({ summary, loading }) {
         label="Total reports"
         value={total}
         animate
-        icon={iconTile('file-text', 'bg-brand-50 text-brand-600')}
+        icon={iconTile('file-text', 'bg-brand-500/15 text-brand-300')}
         delta={weekDelta ?? undefined}
         deltaLabel={`${thisWeek} in the last 7 days`}
         invertTrend
@@ -37,7 +37,7 @@ export default function StatsRow({ summary, loading }) {
         label="Open"
         value={open}
         animate
-        icon={iconTile('alert-circle', 'bg-amber-50 text-amber-600')}
+        icon={iconTile('alert-circle', 'bg-amber-500/15 text-amber-300')}
         deltaLabel="Waiting for action"
       />
       <StatCard
@@ -46,7 +46,7 @@ export default function StatsRow({ summary, loading }) {
         label="Resolved"
         value={resolved}
         animate
-        icon={iconTile('check-circle', 'bg-emerald-50 text-emerald-600')}
+        icon={iconTile('check-circle', 'bg-emerald-500/15 text-emerald-300')}
         deltaLabel={`${resolvedShare}% of all reports`}
       />
       <StatCard
@@ -56,7 +56,7 @@ export default function StatsRow({ summary, loading }) {
         value={anonymousShare}
         suffix="%"
         animate
-        icon={iconTile('eye-off', 'bg-sky-50 text-sky-600')}
+        icon={iconTile('eye-off', 'bg-sky-500/15 text-sky-300')}
         deltaLabel="Shown with a pseudonym"
       />
     </div>

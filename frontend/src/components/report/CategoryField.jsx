@@ -7,7 +7,7 @@ const OPTIONS = CATEGORIES.map((c) => ({
   label: c.label,
   description: c.hint,
   icon: (
-    <span className="grid size-7 place-items-center rounded-lg" style={{ background: `color-mix(in srgb, ${c.color} 12%, white)`, color: c.color }}>
+    <span className="grid size-7 place-items-center rounded-lg" style={{ background: `color-mix(in srgb, ${c.color} 18%, transparent)`, color: c.color }}>
       <Icon name={c.icon} size={16} />
     </span>
   ),

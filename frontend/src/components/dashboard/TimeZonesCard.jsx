@@ -43,14 +43,14 @@ export default function TimeZonesCard({ hours, bands }) {
         {bands.map((band) => (
           <li
             key={band.id}
-            className={`rounded-xl px-3 py-2.5 ring-1 ${band.red ? 'bg-red-50 ring-red-200' : 'bg-slate-50 ring-slate-200/70'}`}
+            className={`rounded-xl px-3 py-2.5 ring-1 ${band.red ? 'bg-red-500/10 ring-red-500/30' : 'bg-white/5 ring-white/10'}`}
           >
             <div className="flex items-center justify-between gap-1">
-              <span className="text-xs font-semibold text-slate-700">{band.label}</span>
+              <span className="text-xs font-semibold text-slate-200">{band.label}</span>
               {band.red && <span className="size-2 rounded-full bg-red-500" aria-label="Red time zone" />}
             </div>
             <div className="mt-1 font-display text-xl font-bold">{band.count}</div>
-            <div className="text-[11px] text-slate-500">
+            <div className="text-[11px] text-slate-400">
               {band.range} · {band.share}%
             </div>
           </li>

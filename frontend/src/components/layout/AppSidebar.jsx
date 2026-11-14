@@ -36,7 +36,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
         linkAs={Link}
         height="100%"
         width={256}
-        tint="rgb(13 16 32 / 0.93)"
+        tint="rgb(17 21 38 / 0.96)"
         className="text-white"
         header={<Logo className="py-1" />}
         sections={[
