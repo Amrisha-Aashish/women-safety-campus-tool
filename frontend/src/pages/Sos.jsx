@@ -10,6 +10,9 @@ import SosResult from '../components/sos/SosResult.jsx';
 import { useGeolocation } from '../hooks/useGeolocation.js';
 import { sendSos } from '../lib/sos.js';
 
+const LOCATION_WAIT_MS = 4000;
+const wait = (ms) => new Promise((resolve) => setTimeout(() => resolve(null), ms));
+
 /**
  * Emergency page: one large button → confirmation (location is captured
  * meanwhile) → the alert is sent → what happens now, plus numbers to call.
@@ -28,11 +31,14 @@ export default function Sos() {
   const confirm = async () => {
     setSending(true);
     try {
-      const sent = await sendSos(geo.coords);
+      // Still finding the position: give it a few seconds, but never hold the alert back for long.
+      const coords =
+        geo.coords ?? (geo.status === 'locating' ? await Promise.race([geo.locate(), wait(LOCATION_WAIT_MS)]) : null);
+      const sent = await sendSos(coords);
       setAlert(sent);
       setConfirming(false);
-    } catch {
-      toast.error("SOS couldn't be sent", { description: 'Call 112 now.' });
+    } catch (error) {
+      toast.error("SOS couldn't be sent", { description: `${error.message} Call 112 now.`, duration: 15000 });
     } finally {
       setSending(false);
     }
