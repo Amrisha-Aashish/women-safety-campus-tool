@@ -34,6 +34,35 @@ The API starts at `http://localhost:4000`.
 | GET | `/api/health` | Health check |
 | GET | `/api/reports` | List persisted reports |
 | POST | `/api/reports` | Persist a safety report |
+| GET | `/api/dashboard/summary` | Report and SOS totals, grouped counts, and the five newest reports |
+
+Dashboard summary response shape:
+
+```json
+{
+  "success": true,
+  "data": {
+    "totalReports": 1,
+    "reportsByCategory": [
+      { "category": "UNSAFE_AREA", "count": 1 }
+    ],
+    "reportsByStatus": [
+      { "status": "OPEN", "count": 1 }
+    ],
+    "totalSosAlerts": 1,
+    "activeSosAlerts": 1,
+    "recentReports": [
+      {
+        "id": "report-id",
+        "category": "UNSAFE_AREA",
+        "status": "OPEN",
+        "locationName": "East Gate Walkway",
+        "createdAt": "2026-11-14T12:00:00.000Z"
+      }
+    ]
+  }
+}
+```
 
 Example report payload:
 
