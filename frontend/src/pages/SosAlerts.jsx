@@ -5,7 +5,9 @@ import Icon from '../components/Icon.jsx';
 import SosAlertCard from '../components/sos-alerts/SosAlertCard.jsx';
 import SosAlertSummary from '../components/sos-alerts/SosAlertSummary.jsx';
 import { getSosStatus, SOS_STATUSES } from '../data/sosStatus.js';
+import { useNewSosAlert } from '../hooks/useNewSosAlert.js';
 import { useSosAlerts } from '../hooks/useSosAlerts.js';
+import { nearestPlace } from '../lib/campusGeo.js';
 import { byUrgency, summarizeSos } from '../lib/sosStats.js';
 
 /** Grey placeholder cards while the first load is in flight. */
@@ -21,7 +23,8 @@ function LoadingCards() {
 
 /**
  * Admin view of SOS alerts: counts per status, a status filter, and one card
- * per alert with Acknowledge / Resolve. Live data is polled every few seconds.
+ * per alert with Acknowledge / Resolve. Live data is polled every few seconds
+ * and a toast announces each new alert.
  */
 export default function SosAlerts() {
   const [source, setSource] = useState('live');
@@ -29,6 +32,11 @@ export default function SosAlerts() {
   // Start on the alerts that still need someone to respond.
   const [filter, setFilter] = useState('ACTIVE');
   const loading = status === 'loading';
+
+  useNewSosAlert(alerts, status, (alert) => {
+    const near = nearestPlace(alert.latitude, alert.longitude);
+    toast.error('New SOS alert', { description: near ? `Near ${near.place.name}` : 'Location unknown' });
+  });
 
   const summary = useMemo(() => summarizeSos(alerts), [alerts]);
   const shown = useMemo(
