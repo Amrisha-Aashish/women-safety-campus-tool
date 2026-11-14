@@ -50,7 +50,7 @@ export default function SafetyMap() {
             <div className="pointer-events-auto">
               <GlassSegmented options={LAYERS} value={layer} onChange={setLayer} aria-label="Map layers" />
             </div>
-            <p className="pointer-events-auto rounded-full bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+            <p className="pointer-events-auto rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-white/10 shadow-sm backdrop-blur">
               {visible.length} reports · {spots.length} places
             </p>
           </div>

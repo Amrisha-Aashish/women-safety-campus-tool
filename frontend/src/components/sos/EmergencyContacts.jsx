@@ -7,7 +7,7 @@ export default function EmergencyContacts() {
   const items = EMERGENCY_CONTACTS.map((c) => ({
     id: c.id,
     leading: (
-      <span className="grid size-9 place-items-center rounded-xl bg-red-50 text-red-600">
+      <span className="grid size-9 place-items-center rounded-xl bg-red-500/10 text-red-300">
         <Icon name="phone" size={18} />
       </span>
     ),

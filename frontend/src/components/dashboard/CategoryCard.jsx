@@ -18,7 +18,7 @@ export default function CategoryCard({ categories, open, resolved }) {
   return (
     <Card radius={22} title="Reports by category" subtitle="What students are reporting" className="h-full">
       <BarList items={items} showShare barOpacity={18} />
-      <div className="mt-6 border-t border-slate-100 pt-5">
+      <div className="mt-6 border-t border-white/10 pt-5">
         <Progress
           label="Open vs resolved"
           size="md"
@@ -31,12 +31,12 @@ export default function CategoryCard({ categories, open, resolved }) {
               : [{ value: 0 }]
           }
         />
-        <div className="mt-3 flex gap-5 text-sm text-slate-600">
+        <div className="mt-3 flex gap-5 text-sm text-slate-300">
           <span className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full bg-(--lg-warning)" /> Open <b className="text-slate-900">{open}</b>
+            <span className="size-2.5 rounded-full bg-(--lg-warning)" /> Open <b className="text-white">{open}</b>
           </span>
           <span className="flex items-center gap-2">
-            <span className="size-2.5 rounded-full bg-(--lg-positive)" /> Resolved <b className="text-slate-900">{resolved}</b>
+            <span className="size-2.5 rounded-full bg-(--lg-positive)" /> Resolved <b className="text-white">{resolved}</b>
           </span>
         </div>
       </div>

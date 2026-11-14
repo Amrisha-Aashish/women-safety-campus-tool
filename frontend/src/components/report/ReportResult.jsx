@@ -12,16 +12,16 @@ export default function ReportResult({ report, onReset }) {
   return (
     <Card radius={24} padding="lg" className="animate-fade-up lg:col-span-2">
       <div className="flex flex-col items-center text-center">
-        <span className="grid size-16 place-items-center rounded-full bg-emerald-50 text-emerald-600 ring-8 ring-emerald-50/60">
+        <span className="grid size-16 place-items-center rounded-full bg-emerald-500/15 text-emerald-300 ring-8 ring-emerald-500/10">
           <Icon name="check" size={32} strokeWidth={2.6} />
         </span>
         <h2 className="mt-5 text-2xl font-extrabold">Report submitted</h2>
-        <p className="mt-2 max-w-md text-slate-600">
+        <p className="mt-2 max-w-md text-slate-300">
           Thank you for speaking up. Your report is now on the safety dashboard and helps find unsafe places before
           someone else gets hurt.
         </p>
         {report.isAnonymous && report.reporterPseudonym && (
-          <p className="mt-5 rounded-2xl bg-brand-50 px-5 py-3 text-sm text-brand-900 ring-1 ring-brand-200">
+          <p className="mt-5 rounded-2xl bg-brand-500/15 px-5 py-3 text-sm text-brand-100 ring-1 ring-brand-400/30">
             You reported anonymously as <b className="font-mono text-base">{report.reporterPseudonym}</b>
           </p>
         )}

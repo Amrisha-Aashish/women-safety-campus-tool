@@ -16,12 +16,12 @@ export default function ReportAside() {
         radius={24}
         title="Your privacy"
         leading={
-          <span className="grid size-9 place-items-center rounded-xl bg-brand-50 text-brand-600">
+          <span className="grid size-9 place-items-center rounded-xl bg-brand-500/15 text-brand-300">
             <Icon name="lock" size={18} />
           </span>
         }
       >
-        <ul className="space-y-2 text-sm text-slate-600">
+        <ul className="space-y-2 text-sm text-slate-300">
           <li>Anonymous reports never store your name.</li>
           <li>Your location is read only if you press “Use my location”.</li>
           <li>Only the campus safety team sees full report details.</li>

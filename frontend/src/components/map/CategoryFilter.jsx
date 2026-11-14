@@ -23,7 +23,7 @@ export default function CategoryFilter({ selected, onChange, counts }) {
           indeterminate={!all && selected.size > 0}
           onChange={(on) => onChange(new Set(on ? CATEGORIES.map((c) => c.value) : []))}
         />
-        <hr className="border-slate-100" />
+        <hr className="border-white/10" />
         {CATEGORIES.map((c) => (
           <div key={c.value} className="flex items-center justify-between gap-2">
             <Checkbox
@@ -32,7 +32,7 @@ export default function CategoryFilter({ selected, onChange, counts }) {
               onChange={(on) => toggle(c.value, on)}
               colors={{ accent: c.color }}
             />
-            <span className="text-sm text-slate-500 tabular-nums">{counts[c.value] ?? 0}</span>
+            <span className="text-sm text-slate-400 tabular-nums">{counts[c.value] ?? 0}</span>
           </div>
         ))}
       </div>

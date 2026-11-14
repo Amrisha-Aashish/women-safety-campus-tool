@@ -28,7 +28,7 @@ export default function DataSourceBar({ source, onSourceChange, status, updatedA
       <GlassBadge tone={tone} dot pulse={status === 'live'}>
         {text}
       </GlassBadge>
-      {updatedAt && <span className="text-xs text-slate-500">Updated {formatTime(updatedAt)}</span>}
+      {updatedAt && <span className="text-xs text-slate-400">Updated {formatTime(updatedAt)}</span>}
       <GlassButton size="sm" onClick={onRefresh} aria-label="Refresh reports" className="ml-auto w-9 px-0">
         <Icon name="refresh" />
       </GlassButton>

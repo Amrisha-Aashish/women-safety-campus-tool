@@ -13,7 +13,7 @@ export default function PrivacyBand() {
   return (
     <section id="privacy" className="scroll-mt-24 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="dark relative isolate overflow-hidden rounded-[32px] bg-ink-900 px-6 py-12 text-white sm:px-12 sm:py-16">
+        <div className="dark relative isolate overflow-hidden rounded-[32px] bg-ink-900 px-6 py-12 text-white ring-1 ring-white/10 sm:px-12 sm:py-16">
           <div aria-hidden="true" className="absolute -top-24 -right-24 -z-10 size-96 rounded-full bg-brand-600/40 blur-3xl" />
           <div aria-hidden="true" className="absolute -bottom-32 left-1/3 -z-10 size-80 rounded-full bg-rose-500/20 blur-3xl" />
           <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
