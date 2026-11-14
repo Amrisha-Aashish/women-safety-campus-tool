@@ -7,9 +7,12 @@ const iconTile = (name, className) => (
   </span>
 );
 
+// StatCard's icon box is hidden on phones, where two cards share a row and the labels need the room.
+const CARD = 'max-sm:[&_div[aria-hidden].size-9]:hidden';
+
 /**
  * Four headline numbers: total reports (with a 14-day trend), open, resolved
- * and the share sent anonymously.
+ * and the share sent anonymously. A 2×2 grid on phones and tablets, one row on wide screens.
  * @param {{ summary: ReturnType<typeof import('../../lib/reportStats.js').summarize>, loading?: boolean }} props
  */
 export default function StatsRow({ summary, loading }) {
@@ -17,9 +20,10 @@ export default function StatsRow({ summary, loading }) {
   const resolvedShare = total ? Math.round((resolved / total) * 100) : 0;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
       <StatCard
         radius={22}
+        className={CARD}
         loading={loading}
         label="Total reports"
         value={total}
@@ -33,6 +37,7 @@ export default function StatsRow({ summary, loading }) {
       />
       <StatCard
         radius={22}
+        className={CARD}
         loading={loading}
         label="Open"
         value={open}
@@ -42,6 +47,7 @@ export default function StatsRow({ summary, loading }) {
       />
       <StatCard
         radius={22}
+        className={CARD}
         loading={loading}
         label="Resolved"
         value={resolved}
@@ -51,6 +57,7 @@ export default function StatsRow({ summary, loading }) {
       />
       <StatCard
         radius={22}
+        className={CARD}
         loading={loading}
         label="Sent anonymously"
         value={anonymousShare}
