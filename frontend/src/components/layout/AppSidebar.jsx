@@ -6,8 +6,9 @@ import Logo from '../Logo.jsx';
 import ApiStatus from './ApiStatus.jsx';
 
 /**
- * Dark glass sidebar for the internal app. The active link follows the URL;
- * SOS is always red so it can be found at a glance.
+ * Glass sidebar for the internal app; it follows the light / dark theme
+ * (tint and SOS colours come from --sidebar-* variables in index.css).
+ * The active link follows the URL; SOS is always red so it can be found at a glance.
  *
  * @param {{ height?: number|string, onNavigate?: () => void, className?: string }} props
  *   `onNavigate` lets the mobile drawer close itself after a link is used.
@@ -23,21 +24,21 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
     active: pathname.startsWith(item.to),
     onClick: onNavigate,
     ...(item.danger && {
-      color: '#fecaca',
-      background: 'rgb(220 38 38 / 0.22)',
+      color: 'var(--sidebar-sos-text)',
+      background: 'var(--sidebar-sos-bg)',
       activeColor: '#fff',
       activeBackground: 'rgb(220 38 38 / 0.85)',
     }),
   }));
 
   return (
-    <div className={`dark ${className ?? ''}`} style={{ height }}>
+    <div className={className} style={{ height }}>
       <GlassSidebar
         linkAs={Link}
         height="100%"
         width={256}
-        tint="rgb(22 22 22 / 0.96)"
-        className="text-white"
+        tint="var(--sidebar-tint)"
+        className="text-neutral-50"
         header={<Logo className="py-1" />}
         sections={[
           { title: 'Workspace', items: items.slice(0, 3) },
@@ -46,7 +47,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
         footer={
           <div className="space-y-3 px-1">
             <ApiStatus />
-            <Link to="/" onClick={onNavigate} className="flex items-center gap-2 text-sm text-white/60 no-underline hover:text-white">
+            <Link to="/" onClick={onNavigate} className="flex items-center gap-2 text-sm text-neutral-50/60 no-underline hover:text-neutral-50">
               <Icon name="home" />
               Back to home
             </Link>

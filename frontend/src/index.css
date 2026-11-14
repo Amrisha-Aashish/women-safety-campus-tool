@@ -62,7 +62,7 @@
    Dark is the default. The light theme flips the colour scales the UI uses
    for text and surfaces (neutral fully; the pale shades of red, emerald,
    amber, fuchsia and brand), so the same classes read well on both.
-   Elements marked .dark (hero, sidebar, privacy band, SOS panel, popovers)
+   Elements marked .dark (hero, privacy band, SOS panel, popovers)
    stay dark in both themes. */
 
 /* Category and risk colours: bright on dark, deeper on light. */
@@ -76,9 +76,15 @@
   --risk-high: #f87171;
   --risk-medium: #fbbf24;
   --risk-low: #a3a3a3;
+  --sidebar-tint: rgb(22 22 22 / 0.96);
+  --sidebar-sos-text: #fecaca;
+  --sidebar-sos-bg: rgb(220 38 38 / 0.22);
 }
 
 :root[data-theme='light'] {
+  --sidebar-tint: rgb(255 255 255 / 0.92);
+  --sidebar-sos-text: #b91c1c;
+  --sidebar-sos-bg: rgb(220 38 38 / 0.1);
   color-scheme: light;
   --color-canvas: #f5f5f5;
   --cat-harassment: #db2777;
