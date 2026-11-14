@@ -51,6 +51,7 @@ export default function BlackSpotsCard({ spots, limit = 5 }) {
         density="compact"
         empty={<p className="py-6 text-center text-sm text-slate-500">No reports yet.</p>}
         className="-mx-2"
+        classNames={{ subtitle: "whitespace-normal overflow-visible" }}
       />
     </Card>
   );

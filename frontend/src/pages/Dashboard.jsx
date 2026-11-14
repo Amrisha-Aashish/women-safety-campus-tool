@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import DataSourceBar from '../components/app/DataSourceBar.jsx';
 import BlackSpotsCard from '../components/dashboard/BlackSpotsCard.jsx';
 import CategoryCard from '../components/dashboard/CategoryCard.jsx';
+import RecentReportsTable from '../components/dashboard/RecentReportsTable.jsx';
 import StatsRow from '../components/dashboard/StatsRow.jsx';
 import TimeZonesCard from '../components/dashboard/TimeZonesCard.jsx';
 import { useReports } from '../hooks/useReports.js';
@@ -26,6 +27,7 @@ export default function Dashboard() {
         <TimeZonesCard hours={hours} bands={bands} />
       </div>
       <div className="grid gap-5 lg:grid-cols-3">
+        <RecentReportsTable reports={reports} loading={status === 'loading'} />
         <BlackSpotsCard spots={spots} />
       </div>
     </div>
