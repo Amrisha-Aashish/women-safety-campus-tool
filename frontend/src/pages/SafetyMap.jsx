@@ -1,3 +1,3 @@
 export default function SafetyMap() {
-  return <h1 className="p-8 text-2xl font-bold">SafetyMap</h1>;
+  return <p className="text-slate-500">Coming next.</p>;
 }
