@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import healthRouter from './routes/health.routes.js';
 import reportsRouter from './routes/reports.routes.js';
+import sosAlertsRouter from './routes/sos-alerts.routes.js';
 import { notFound, errorHandler } from './middleware/error.middleware.js';
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 app.use('/api/health', healthRouter);
 app.use('/api/reports', reportsRouter);
+app.use('/api/sos-alerts', sosAlertsRouter);
 
 app.use(notFound);
 app.use(errorHandler);
