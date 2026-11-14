@@ -26,7 +26,7 @@ const COLUMNS = [
     searchValue: (r) => `${r.description} ${r.location?.name ?? ''} ${reporterOf(r)}`,
     cell: (value, row) => (
       <div className="min-w-0 py-0.5">
-        <p className="line-clamp-1 text-white">{value}</p>
+        <p className="line-clamp-1 text-neutral-50">{value}</p>
         <p className="mt-0.5 truncate text-xs text-neutral-400">
           {row.location?.name ?? 'Unknown place'} · <span className={row.isAnonymous ? 'italic' : ''}>{reporterOf(row)}</span>
         </p>

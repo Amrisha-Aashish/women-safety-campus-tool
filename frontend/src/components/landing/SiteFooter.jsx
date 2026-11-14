@@ -10,7 +10,7 @@ const LINKS = [
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-canvas">
+    <footer className="border-t border-neutral-50/10 bg-canvas">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
           <Logo />
@@ -20,13 +20,13 @@ export default function SiteFooter() {
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-neutral-300">
           {LINKS.map((link) => (
-            <Link key={link.to} to={link.to} className="hover:text-white">
+            <Link key={link.to} to={link.to} className="hover:text-neutral-50">
               {link.label}
             </Link>
           ))}
         </nav>
       </div>
-      <p className="border-t border-white/10 px-4 py-5 text-center text-xs text-neutral-400">
+      <p className="border-t border-neutral-50/10 px-4 py-5 text-center text-xs text-neutral-400">
         In danger right now? Call <a href="tel:112" className="font-semibold text-neutral-200">112</a> or the women
         helpline <a href="tel:181" className="font-semibold text-neutral-200">181</a>.
       </p>

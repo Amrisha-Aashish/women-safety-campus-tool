@@ -2,6 +2,7 @@ import { GlassButton, GlassNavbar } from 'glassform';
 import { Link } from 'react-router';
 import Icon from '../Icon.jsx';
 import Logo from '../Logo.jsx';
+import ThemeToggle from '../ThemeToggle.jsx';
 
 const LINKS = [
   { href: '#how-it-works', label: 'How it works' },
@@ -21,6 +22,7 @@ export default function SiteHeader() {
         className="text-white"
         actions={
           <>
+            <ThemeToggle />
             <GlassButton as={Link} to="/sos" size="sm" tint="rgb(220 38 38 / 0.85)" className="text-white">
               <Icon name="siren" />
               SOS

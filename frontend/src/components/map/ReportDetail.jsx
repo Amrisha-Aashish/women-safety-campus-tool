@@ -10,7 +10,7 @@ import Icon from '../Icon.jsx';
 export default function ReportDetail({ report, onClose }) {
   const category = getCategory(report.category);
   return (
-    <GlassSurface radius={20} tint="rgb(28 28 28 / 0.9)" className="pointer-events-auto w-full animate-fade-up p-4 text-left sm:w-80">
+    <GlassSurface radius={20} tint="rgb(28 28 28 / 0.9)" className="dark pointer-events-auto w-full animate-fade-up p-4 text-left text-neutral-100 sm:w-80">
       <div className="flex items-start justify-between gap-3">
         <Badge tone={category.color} dot>
           {category.label}
