@@ -1,5 +1,6 @@
 import { Card, TextField } from 'glassform';
 import CategoryField from './CategoryField.jsx';
+import LocationFields from './LocationFields.jsx';
 
 /**
  * The incident report form. State lives in useReportForm (passed in as `form`).
@@ -35,6 +36,9 @@ export default function ReportForm({ form }) {
             description="Don't include names of other people unless it's necessary."
           />
         </fieldset>
+
+        <hr className="border-slate-100" />
+        <LocationFields values={values} set={set} errors={errors} />
       </form>
     </Card>
   );
