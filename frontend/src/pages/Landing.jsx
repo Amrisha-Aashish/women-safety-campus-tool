@@ -1,4 +1,5 @@
 import Hero from '../components/landing/Hero.jsx';
+import QuickActions from '../components/landing/QuickActions.jsx';
 import SiteHeader from '../components/landing/SiteHeader.jsx';
 
 /** Public home page: what SafeCampus is, and quick ways in. */
@@ -7,7 +8,9 @@ export default function Landing() {
     <div className="min-h-dvh bg-white">
       <SiteHeader />
       <main>
-        <Hero />
+        <Hero>
+          <QuickActions />
+        </Hero>
       </main>
     </div>
   );
