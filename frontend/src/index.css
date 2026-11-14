@@ -57,6 +57,19 @@
   --lg-solid-border: rgb(255 255 255 / 0.07);
 }
 
+/* Glass light stays still: glassform moves its highlight and rim light with the
+   pointer (--lg-x, --lg-y, --lg-angle set inline on mouse move). Pinning the
+   variables with !important keeps the static sheen without the movement, and
+   the highlight no longer brightens on hover. */
+.glass {
+  --lg-x: 28% !important;
+  --lg-y: -30% !important;
+  --lg-angle: 135deg !important;
+}
+.glass:hover::before {
+  opacity: 0.75;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
