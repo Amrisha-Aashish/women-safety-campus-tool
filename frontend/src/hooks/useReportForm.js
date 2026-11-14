@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createReport } from '../lib/api.js';
+import { isOnCampus } from '../lib/campusGeo.js';
 
 const EMPTY = {
   category: null,
@@ -11,7 +12,10 @@ const EMPTY = {
   isAnonymous: true,
 };
 
-/** Same rules as backend/src/middleware/validate-report.middleware.js, so errors show before sending. */
+/**
+ * Same rules as backend/src/middleware/validate-report.middleware.js, so errors show before sending,
+ * including the campus boundary check.
+ */
 export function validate(values) {
   const errors = {};
   if (!values.category) errors.category = 'Pick the category that fits best.';
@@ -23,6 +27,9 @@ export function validate(values) {
   const lng = Number(values.longitude);
   if (values.latitude === '' || !Number.isFinite(lat) || lat < -90 || lat > 90) errors.latitude = 'Latitude must be between -90 and 90.';
   if (values.longitude === '' || !Number.isFinite(lng) || lng < -180 || lng > 180) errors.longitude = 'Longitude must be between -180 and 180.';
+  if (!errors.latitude && !errors.longitude && !isOnCampus(lat, lng)) {
+    errors.coordinates = 'This point is outside the campus. Pick a campus place, or use your location while you are on campus.';
+  }
   return errors;
 }
 

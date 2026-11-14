@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Badge, Button, Select, TextField } from 'glassform';
 import { CAMPUS_PLACES } from '../../data/campusPlaces.js';
 import { useGeolocation } from '../../hooks/useGeolocation.js';
+import { isOnCampus } from '../../lib/campusGeo.js';
 import Icon from '../Icon.jsx';
 
 const PLACE_OPTIONS = [
@@ -10,11 +12,13 @@ const PLACE_OPTIONS = [
 
 /**
  * Where it happened: pick a known campus place (fills everything in), or type
- * a place name and coordinates, or use the browser's location.
+ * a place name and coordinates, or use the browser's location. Points outside
+ * the campus boundary are rejected.
  * @param {{ values: object, set: (patch: object) => void, errors: object }} props
  */
 export default function LocationFields({ values, set, errors }) {
   const geo = useGeolocation();
+  const [offCampus, setOffCampus] = useState(false);
 
   const pickPlace = (placeId) => {
     const place = CAMPUS_PLACES.find((p) => p.id === placeId);
@@ -24,7 +28,8 @@ export default function LocationFields({ values, set, errors }) {
 
   const useMyLocation = async () => {
     const coords = await geo.locate();
-    if (coords) {
+    setOffCampus(Boolean(coords) && !isOnCampus(coords.latitude, coords.longitude));
+    if (coords && isOnCampus(coords.latitude, coords.longitude)) {
       set({
         latitude: String(coords.latitude),
         longitude: String(coords.longitude),
@@ -86,7 +91,19 @@ export default function LocationFields({ values, set, errors }) {
         </Button>
       </div>
 
-      {geo.status === 'success' && (
+      {errors.coordinates && (
+        <p role="alert" className="flex items-start gap-2 text-sm text-red-300">
+          <Icon name="alert-circle" className="mt-0.5 shrink-0" />
+          {errors.coordinates}
+        </p>
+      )}
+      {offCampus && (
+        <p role="alert" className="flex items-start gap-2 text-sm text-amber-300">
+          <Icon name="alert-triangle" className="mt-0.5 shrink-0" />
+          You seem to be outside the campus, so your location wasn’t used. Pick the place from the list instead.
+        </p>
+      )}
+      {geo.status === 'success' && !offCampus && (
         <Badge tone="positive" icon={<Icon name="check" />} className="self-start">
           Location captured, accurate to about {geo.coords.accuracy} m
         </Badge>
