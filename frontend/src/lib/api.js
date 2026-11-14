@@ -59,3 +59,25 @@ export const getReports = (signal) => request('/api/reports', { signal });
  * @returns {Promise<object>} the saved report, with `reporterPseudonym` when anonymous
  */
 export const createReport = (report) => request('/api/reports', { method: 'POST', body: report });
+
+// ---- SOS alerts ----
+// An alert is { id, userId, latitude, longitude, status: 'ACTIVE'|'ACKNOWLEDGED'|'RESOLVED', createdAt, resolvedAt }.
+
+/** GET /api/sos-alerts → alert[], newest first. */
+export const getSosAlerts = (signal) => request('/api/sos-alerts', { signal });
+
+/**
+ * POST /api/sos-alerts
+ * @param {{ latitude: number, longitude: number }} location
+ * @returns {Promise<object>} the new alert, status ACTIVE
+ */
+export const createSosAlert = ({ latitude, longitude }) =>
+  request('/api/sos-alerts', { method: 'POST', body: { latitude, longitude } });
+
+/** PATCH /api/sos-alerts/:id/acknowledge → the updated alert. */
+export const acknowledgeSosAlert = (id) =>
+  request(`/api/sos-alerts/${encodeURIComponent(id)}/acknowledge`, { method: 'PATCH' });
+
+/** PATCH /api/sos-alerts/:id/resolve → the updated alert, with resolvedAt. */
+export const resolveSosAlert = (id) =>
+  request(`/api/sos-alerts/${encodeURIComponent(id)}/resolve`, { method: 'PATCH' });
