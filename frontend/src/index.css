@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
-/* Design tokens. Every colour used by the app comes from here. */
+/* Design tokens for layout and text. UI components come from glassform; its
+   own --lg-* tokens are set further down so both share one palette. */
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -22,32 +23,42 @@
   --color-ink-900: #0d1020;
   --color-ink-800: #151a33;
   --color-ink-700: #222846;
-  --color-ink-600: #343b5e;
 
   /* App canvas behind cards. */
-  --color-canvas: #f5f6fa;
-
-  /* Category colours, also used on the map. */
-  --color-cat-harassment: #db2777;
-  --color-cat-stalking: #7c3aed;
-  --color-cat-unsafe: #d97706;
-  --color-cat-emergency: #dc2626;
-  --color-cat-other: #0891b2;
-
-  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.06);
-  --shadow-lift: 0 12px 32px -12px rgb(16 24 40 / 0.18);
+  --color-canvas: #f4f5fa;
 
   --animate-sos-ring: sos-ring 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
   --animate-fade-up: fade-up 0.4s ease-out both;
 
   @keyframes sos-ring {
     0% { transform: scale(1); opacity: 0.55; }
-    100% { transform: scale(1.65); opacity: 0; }
+    100% { transform: scale(1.7); opacity: 0; }
   }
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: none; }
   }
+}
+
+/* glassform theme: brand accent, SafeCampus status colours, slate text. */
+:root {
+  --lg-accent: #6338ee;
+  --lg-on-accent: #fff;
+  --lg-text: #0f172a;
+  --lg-positive: #059669;
+  --lg-negative: #dc2626;
+  --lg-warning: #d97706;
+  --lg-info: #0284c7;
+  --lg-switch-on: #6338ee;
+  --lg-solid: #fff;
+  --lg-solid-border: rgb(15 23 42 / 0.08);
+}
+
+/* Dark islands (landing hero, sidebar) use glassform's `.dark` tokens. */
+.dark {
+  --lg-text: #f5f5f7;
+  --lg-accent: #8b74ff;
+  --lg-solid: #151a33;
 }
 
 @layer base {
@@ -56,13 +67,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-canvas font-sans text-slate-800;
+    @apply bg-canvas font-sans text-slate-900;
   }
   h1, h2, h3, h4 {
-    @apply font-display text-slate-900;
-  }
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-brand-500;
+    @apply font-display;
   }
   ::selection {
     @apply bg-brand-200 text-brand-900;
