@@ -1,4 +1,6 @@
-import { Card, TextField } from 'glassform';
+import { Card, GlassButton, TextField, toast } from 'glassform';
+import Icon from '../Icon.jsx';
+import AnonymousToggle from './AnonymousToggle.jsx';
 import CategoryField from './CategoryField.jsx';
 import LocationFields from './LocationFields.jsx';
 
@@ -16,7 +18,9 @@ export default function ReportForm({ form }) {
         className="flex flex-col gap-6"
         onSubmit={(e) => {
           e.preventDefault();
-          form.submit();
+          form.submit().then((ok) => {
+            if (ok) toast.success('Report submitted', { description: 'It is now on the safety dashboard.' });
+          });
         }}
       >
         <fieldset className="flex flex-col gap-5">
@@ -39,6 +43,32 @@ export default function ReportForm({ form }) {
 
         <hr className="border-slate-100" />
         <LocationFields values={values} set={set} errors={errors} />
+
+        <hr className="border-slate-100" />
+        <AnonymousToggle checked={values.isAnonymous} onChange={(isAnonymous) => set({ isAnonymous })} />
+
+        {form.serverError && (
+          <div role="alert" className="flex items-start gap-3 rounded-2xl bg-red-50 p-4 text-sm text-red-800 ring-1 ring-red-200">
+            <Icon name="alert-circle" size={18} className="mt-0.5 shrink-0" />
+            <div>
+              <p className="font-semibold">Your report wasn't sent</p>
+              <p className="mt-0.5">{form.serverError} Your answers are still here, so you can try again.</p>
+            </div>
+          </div>
+        )}
+        {Object.keys(errors).length > 0 && (
+          <p role="alert" className="text-sm font-medium text-red-700">
+            Please fix the highlighted fields.
+          </p>
+        )}
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-xs text-slate-500">Fields marked * are required.</p>
+          <GlassButton type="submit" prominent size="lg" state={form.status === 'sending' ? 'loading' : 'idle'}>
+            <Icon name="send" />
+            Submit report
+          </GlassButton>
+        </div>
       </form>
     </Card>
   );
