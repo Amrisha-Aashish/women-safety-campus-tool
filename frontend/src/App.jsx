@@ -11,6 +11,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
 const Report = lazy(() => import('./pages/Report.jsx'));
 const SafetyMap = lazy(() => import('./pages/SafetyMap.jsx'));
 const Sos = lazy(() => import('./pages/Sos.jsx'));
+const SosAlerts = lazy(() => import('./pages/SosAlerts.jsx'));
 
 const page = (Page) => (
   <Suspense fallback={<PageLoader />}>
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="report" element={page(Report)} />
           <Route path="map" element={page(SafetyMap)} />
           <Route path="sos" element={page(Sos)} />
+          <Route path="sos-alerts" element={page(SosAlerts)} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

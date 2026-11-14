@@ -15,7 +15,7 @@ import MobileNav from './MobileNav.jsx';
 export default function PageToolbar({ children, actions }) {
   const { pathname } = useLocation();
   const page = navItemFor(pathname);
-  const onSos = pathname.startsWith('/sos');
+  const onSos = pathname === '/sos';
 
   return (
     <div className="mb-2 flex flex-wrap items-center gap-x-4 gap-y-4">

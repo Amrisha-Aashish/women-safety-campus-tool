@@ -1,9 +1,11 @@
 import { GlassSidebar } from 'glassform';
 import { Link, useLocation } from 'react-router';
-import { APP_NAV } from '../../data/navigation.js';
+import { APP_NAV, isActivePath } from '../../data/navigation.js';
 import Icon from '../Icon.jsx';
 import Logo from '../Logo.jsx';
 import ApiStatus from './ApiStatus.jsx';
+
+const SECTIONS = ['Workspace', 'Admin', 'Emergency'];
 
 /**
  * Glass sidebar for the internal app; it follows the light / dark theme
@@ -21,7 +23,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
     href: item.to,
     label: item.label,
     icon: <Icon name={item.icon} />,
-    active: pathname.startsWith(item.to),
+    active: isActivePath(pathname, item.to),
     onClick: onNavigate,
     ...(item.danger && {
       color: 'var(--sidebar-sos-text)',
@@ -40,10 +42,7 @@ export default function AppSidebar({ height = '100%', onNavigate, className }) {
         tint="var(--sidebar-tint)"
         className="text-neutral-50"
         header={<Logo className="py-1" />}
-        sections={[
-          { title: 'Workspace', items: items.slice(0, 3) },
-          { title: 'Emergency', items: items.slice(3) },
-        ]}
+        sections={SECTIONS.map((title) => ({ title, items: items.filter((_, i) => APP_NAV[i].section === title) }))}
         footer={
           <div className="space-y-3 px-1">
             <ApiStatus />
