@@ -5,7 +5,7 @@ React + Vite frontend for the Community Based Reporting and Monitoring Tool for 
 - **UI components:** [glassform](https://www.npmjs.com/package/glassform). Glass is used for navigation and controls (sidebar, top bar, buttons, segmented controls, map overlays, SOS). The solid twins (`Card`, `Table`, `StatCard`, `List`…) are used for content.
 - **Layout:** Tailwind CSS v4.
 - **Icons:** a small in-house SVG set (`src/components/Icon.jsx` + `src/data/iconPaths.js`).
-- **Map:** a minimal SVG drawing of the campus only (`src/components/map/CampusMap.jsx`), built from the campus boundary. No map library or tiles.
+- **Map:** real map tiles (Esri satellite imagery or OpenStreetMap streets) cut to the campus boundary, with labels, risk zones and report dots drawn on top as SVG (`src/components/map/CampusMap.jsx`). No map library: tiles are placed with the Web Mercator maths in `src/lib/campusGeo.js`.
 
 ## Run locally
 
@@ -36,11 +36,15 @@ npm run preview    # serve the build
 | `/` | Landing page: project pitch and quick actions for Report, Safety map and SOS | none |
 | `/dashboard` | Admin dashboard: total / open / resolved / anonymous, reports by category, red time zones by hour, top black spots, searchable recent reports table | `GET /api/reports` every 10 s |
 | `/report` | Report form: category dropdown, description, campus place picker, location name, latitude / longitude (must be on campus), browser location, anonymous toggle, success and error states | `POST /api/reports` |
-| `/map` | Safety map of the campus only: report dots by category (click for details), risk zones by level, layer and category filters, black spot list | `GET /api/reports` |
+| `/map` | Safety map of the campus only, satellite or streets: report dots by category (click for details), risk zones by level, layer and category filters, black spot list | `GET /api/reports` + map tiles |
 | `/sos` | SOS: large button, confirmation dialog, location capture, sent screen, emergency numbers | not connected yet (see below) |
 | `*` | 404 page | none |
 
 The internal pages share a sidebar layout (`src/components/layout/AppLayout.jsx`). On phones the sidebar opens as a drawer from the menu button. The sidebar footer shows whether `GET /api/health` responds.
+
+## Map tiles
+
+The map loads 49 tiles at zoom 18 that cover the campus, from Esri World Imagery (satellite) or OpenStreetMap (streets). Both are free with the attribution shown on the map; for heavy public traffic, check their usage policies or switch to a provider with an API key by changing `BASEMAPS` in `src/lib/campusGeo.js`.
 
 ## Data and placeholders
 

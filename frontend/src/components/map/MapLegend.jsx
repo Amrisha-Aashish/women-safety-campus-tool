@@ -1,10 +1,17 @@
 import { CATEGORIES } from '../../data/categories.js';
 import { RISK } from '../../data/risk.js';
 
-/** One-line legend under the map: report colours and risk zone levels. */
-export default function MapLegend() {
+/**
+ * One-line legend under the map: how many reports and places are shown, report colours and risk zone levels.
+ * @param {{ reports: number, places: number }} props
+ */
+export default function MapLegend({ reports, places }) {
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/10 px-4 py-3 text-xs text-slate-400">
+      <span className="font-semibold text-slate-200">
+        {reports} reports · {places} places
+      </span>
+      <span className="hidden h-4 w-px bg-white/10 sm:block" aria-hidden="true" />
       {CATEGORIES.map((c) => (
         <span key={c.value} className="flex items-center gap-1.5">
           <span className="size-2.5 rounded-full" style={{ background: c.color }} />

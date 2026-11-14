@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { CAMPUS_PLACES } from '../../data/campusPlaces.js';
 import { getCategory } from '../../data/categories.js';
 import { RISK } from '../../data/risk.js';
-import { BOUNDARY_PATH, MAP_VIEWBOX, project, UNITS_PER_M } from '../../lib/campusGeo.js';
+import { BASEMAPS, BOUNDARY_PATH, CAMPUS_TILES, MAP_VIEWBOX, project, TILE_ZOOM, UNITS_PER_M } from '../../lib/campusGeo.js';
 import { formatDateTime } from '../../lib/format.js';
 
 /** Risk zone radius in metres: grows with the number of reports at a place. */
@@ -10,9 +10,9 @@ const zoneRadiusM = (count) => Math.min(120, 28 + count * 8);
 const SCALE_M = 100;
 
 /**
- * Minimal campus map drawn as SVG: the campus outline, place labels, risk
- * zones and one dot per report. Only the campus is shown; nothing outside
- * the boundary is drawn.
+ * Campus map: real map tiles (satellite or streets) cut to the campus outline,
+ * with place labels, risk zones and one dot per report drawn on top as SVG.
+ * Only the campus is shown; nothing outside the boundary is drawn.
  *
  * @param {{
  *   reports: object[],
@@ -23,6 +23,7 @@ const SCALE_M = 100;
  *   onSelectSpot?: (name: string) => void,
  *   selectedReport?: string|null,
  *   onSelectReport?: (id: string) => void,
+ *   basemap?: keyof BASEMAPS,
  *   className?: string,
  * }} props
  */
@@ -35,8 +36,12 @@ export default function CampusMap({
   onSelectSpot,
   selectedReport,
   onSelectReport,
+  basemap = 'satellite',
   className,
 }) {
+  const tiles = BASEMAPS[basemap] ?? BASEMAPS.satellite;
+  // Street maps are pale, so labels flip to dark text on a white halo.
+  const light = basemap === 'streets';
   const id = useId().replace(/:/g, '');
   const { x, y, width, height } = MAP_VIEWBOX;
   const activate = (fn) => (e) => {
@@ -63,10 +68,25 @@ export default function CampusMap({
         </clipPath>
       </defs>
 
-      {/* Campus ground */}
+      {/* Campus ground: a dot grid while tiles load (or if they can't), then the map tiles, slightly dimmed so dots stand out */}
       <path d={BOUNDARY_PATH} fill="rgb(255 255 255 / 0.025)" />
       <rect x={x} y={y} width={width} height={height} fill={`url(#${id}-dots)`} clipPath={`url(#${id}-clip)`} />
-      <path d={BOUNDARY_PATH} fill="none" stroke="rgb(255 255 255 / 0.18)" strokeWidth="2" strokeLinejoin="round" />
+      <g clipPath={`url(#${id}-clip)`} aria-hidden="true">
+        {CAMPUS_TILES.map((t) => (
+          <image
+            key={`${basemap}-${t.key}`}
+            href={tiles.url(t.tx, t.ty, TILE_ZOOM)}
+            x={t.x}
+            y={t.y}
+            // A hair of overlap hides seams between tiles.
+            width={t.size + 0.6}
+            height={t.size + 0.6}
+            preserveAspectRatio="none"
+          />
+        ))}
+        <rect x={x} y={y} width={width} height={height} fill="#0a0c16" opacity={basemap === 'streets' ? 0.15 : 0.28} />
+      </g>
+      <path d={BOUNDARY_PATH} fill="none" stroke="rgb(255 255 255 / 0.7)" strokeWidth="2.5" strokeLinejoin="round" />
 
       {/* Risk zones, clipped to the campus so nothing is drawn outside it */}
       <g clipPath={`url(#${id}-clip)`}>
@@ -96,10 +116,10 @@ export default function CampusMap({
                   cy={p.y}
                   r={r}
                   fill={color}
-                  fillOpacity={spot.risk === 'high' ? 0.16 : 0.1}
+                  fillOpacity={spot.risk === 'high' ? 0.26 : 0.18}
                   stroke={color}
-                  strokeOpacity={selected ? 0.9 : 0.45}
-                  strokeWidth={selected ? 3 : 1.5}
+                  strokeOpacity={selected ? 1 : 0.8}
+                  strokeWidth={selected ? 3.5 : 2}
                   strokeDasharray={spot.risk === 'low' ? '6 8' : undefined}
                 />
               </g>
@@ -113,16 +133,17 @@ export default function CampusMap({
           const p = project(place.latitude, place.longitude);
           return (
             <g key={place.id}>
-              <rect x={p.x - 5} y={p.y - 5} width="10" height="10" rx="3" fill="#4a5275" />
+              <circle cx={p.x} cy={p.y} r="5" fill="#fff" stroke="#0a0c16" strokeWidth="2" />
               <text
                 x={p.x}
                 y={p.y + 32}
                 textAnchor="middle"
                 fontSize="21"
                 fontWeight="500"
-                fill="#8a93b4"
-                stroke="#0e1120"
-                strokeWidth="5"
+                fill={light ? '#0f172a' : '#f1f5f9'}
+                stroke={light ? '#fff' : '#0a0c16'}
+                strokeOpacity="0.85"
+                strokeWidth="6"
                 paintOrder="stroke"
               >
                 {place.name}
@@ -148,7 +169,7 @@ export default function CampusMap({
               cy={p.y}
               r={selected ? 13 : 9}
               fill={category.color}
-              stroke={selected ? '#fff' : '#0e1120'}
+              stroke={selected ? '#fff' : '#0a0c16'}
               strokeWidth={selected ? 4 : 3}
               role="button"
               tabIndex={0}
@@ -163,9 +184,13 @@ export default function CampusMap({
           );
         })}
 
+      <text x={x + 8} y={height + y - 10} fontSize="15" fill="#94a3b8">
+        {tiles.attribution}
+      </text>
+
       {/* North arrow and scale */}
-      <g aria-hidden="true" fill="#7c86a8" fontSize="20" fontWeight="600">
-        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} fill="#7c86a8" />
+      <g aria-hidden="true" fill="#cbd5e1" fontSize="20" fontWeight="600">
+        <path d={`M${width + x - 36} ${y + 46} l10 -24 l10 24 l-10 -6 z`} fill="#cbd5e1" />
         <text x={width + x - 26} y={y + 66} textAnchor="middle">
           N
         </text>
@@ -174,7 +199,7 @@ export default function CampusMap({
           x2={width + x - 30}
           y1={height + y - 26}
           y2={height + y - 26}
-          stroke="#7c86a8"
+          stroke="#cbd5e1"
           strokeWidth="2"
         />
         <text x={width + x - 30 - (SCALE_M * UNITS_PER_M) / 2} y={height + y - 34} textAnchor="middle">

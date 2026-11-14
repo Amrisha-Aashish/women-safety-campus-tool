@@ -1,4 +1,5 @@
-// Geometry for the campus: the boundary check and the projection used by the map.
+// Geometry for the campus: the boundary check, and the Web Mercator projection
+// the map uses so report dots line up with the map tiles underneath.
 import { CAMPUS_BOUNDARY } from '../data/campusPlaces.js';
 
 /** True when the point lies inside `polygon` ([lat, lng] corners). Ray casting. */
@@ -18,34 +19,41 @@ export function isOnCampus(latitude, longitude) {
   return Number.isFinite(latitude) && Number.isFinite(longitude) && isInsidePolygon(latitude, longitude);
 }
 
-// ---- Projection: latitude / longitude → SVG units (north up, 1000 units wide) ----
+// ---- Web Mercator: the same pixel grid as slippy-map tiles ----
+
+/** Tile zoom level used for the campus map. */
+export const TILE_ZOOM = 18;
+const TILE = 256;
+const WORLD = TILE * 2 ** TILE_ZOOM;
+
+const worldX = (lng) => ((lng + 180) / 360) * WORLD;
+const worldY = (lat) => {
+  const phi = (lat * Math.PI) / 180;
+  return ((1 - Math.log(Math.tan(phi) + 1 / Math.cos(phi)) / Math.PI) / 2) * WORLD;
+};
 
 const lats = CAMPUS_BOUNDARY.map(([lat]) => lat);
 const lngs = CAMPUS_BOUNDARY.map(([, lng]) => lng);
-const MIN_LAT = Math.min(...lats);
-const MAX_LAT = Math.max(...lats);
-const MIN_LNG = Math.min(...lngs);
-const MAX_LNG = Math.max(...lngs);
-const COS = Math.cos((((MIN_LAT + MAX_LAT) / 2) * Math.PI) / 180);
-const M_PER_DEG_LAT = 110574;
-const M_PER_DEG_LNG = 111320 * COS;
+const LEFT = worldX(Math.min(...lngs));
+const RIGHT = worldX(Math.max(...lngs));
+const TOP = worldY(Math.max(...lats));
+const BOTTOM = worldY(Math.min(...lats));
 
-const WIDTH_M = (MAX_LNG - MIN_LNG) * M_PER_DEG_LNG;
-const HEIGHT_M = (MAX_LAT - MIN_LAT) * M_PER_DEG_LAT;
+// Map units: the campus is 1000 units wide, north up.
+const K = 1000 / (RIGHT - LEFT);
+const CENTER_LAT = (Math.min(...lats) + Math.max(...lats)) / 2;
+const M_PER_WORLD_PX = (156543.03392 * Math.cos((CENTER_LAT * Math.PI) / 180)) / 2 ** TILE_ZOOM;
 const PAD = 40;
 
-/** SVG units per metre. */
-export const UNITS_PER_M = 1000 / WIDTH_M;
+/** Map units per metre. */
+export const UNITS_PER_M = K / M_PER_WORLD_PX;
 
 /** viewBox of the campus map, with padding around the boundary. */
-export const MAP_VIEWBOX = { x: -PAD, y: -PAD, width: 1000 + PAD * 2, height: HEIGHT_M * UNITS_PER_M + PAD * 2 };
+export const MAP_VIEWBOX = { x: -PAD, y: -PAD, width: 1000 + PAD * 2, height: (BOTTOM - TOP) * K + PAD * 2 };
 
 /** Project a coordinate to { x, y } in map units. */
 export function project(latitude, longitude) {
-  return {
-    x: (longitude - MIN_LNG) * M_PER_DEG_LNG * UNITS_PER_M,
-    y: (MAX_LAT - latitude) * M_PER_DEG_LAT * UNITS_PER_M,
-  };
+  return { x: (worldX(longitude) - LEFT) * K, y: (worldY(latitude) - TOP) * K };
 }
 
 /** The boundary as an SVG path. */
@@ -53,3 +61,28 @@ export const BOUNDARY_PATH = `${CAMPUS_BOUNDARY.map(([lat, lng], i) => {
   const { x, y } = project(lat, lng);
   return `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`;
 }).join(' ')} Z`;
+
+/** Map tile sources. `url(x, y, z)` builds one tile's address. */
+export const BASEMAPS = {
+  satellite: {
+    label: 'Satellite',
+    url: (x, y, z) => `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`,
+    attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
+  },
+  streets: {
+    label: 'Streets',
+    url: (x, y, z) => `https://tile.openstreetmap.org/${z}/${x}/${y}.png`,
+    attribution: '© OpenStreetMap contributors',
+  },
+};
+
+/** The tiles that cover the campus, positioned in map units: [{ key, tx, ty, x, y, size }]. */
+export const CAMPUS_TILES = (() => {
+  const tiles = [];
+  for (let tx = Math.floor(LEFT / TILE); tx <= Math.floor(RIGHT / TILE); tx++) {
+    for (let ty = Math.floor(TOP / TILE); ty <= Math.floor(BOTTOM / TILE); ty++) {
+      tiles.push({ key: `${tx}-${ty}`, tx, ty, x: (tx * TILE - LEFT) * K, y: (ty * TILE - TOP) * K, size: TILE * K });
+    }
+  }
+  return tiles;
+})();
