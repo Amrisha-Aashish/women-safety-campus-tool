@@ -1,3 +1,4 @@
+import { GlassToaster } from 'glassform';
 import { Outlet } from 'react-router';
 import AppSidebar from './AppSidebar.jsx';
 import AppTopbar from './AppTopbar.jsx';
@@ -26,6 +27,8 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      <GlassToaster position="top-center" />
     </div>
   );
 }
