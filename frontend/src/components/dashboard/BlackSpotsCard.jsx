@@ -1,14 +1,10 @@
 import { Badge, Button, Card, List } from 'glassform';
 import { Link } from 'react-router';
 import { getCategory } from '../../data/categories.js';
+import { RISK } from '../../data/risk.js';
 import { formatHour } from '../../lib/format.js';
 import Icon from '../Icon.jsx';
 
-export const RISK = {
-  high: { tone: 'negative', label: 'High risk', color: '#dc2626' },
-  medium: { tone: 'warning', label: 'Medium', color: '#d97706' },
-  low: { tone: 'neutral', label: 'Low', color: '#64748b' },
-};
 
 /**
  * The places with the most reports ("black spots"), most reported first.
